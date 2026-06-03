@@ -3,19 +3,26 @@
 %   ACL 2026 Findings Poster - UrBLiMP                %
 %   University of Konstanz Corporate Design           %
 %                                                     %
-%   Compile with: XeLaTeX                             %
+%   Compile with: XeLaTeX  (or LuaLaTeX)              %
 %   Requires: themeKonstanz.sty + graphics/           %
 %             UniKonstanz_Logo_Optimum.pdf            %
 %                                                     %
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-% NOTE on babel:
-%   themeKonstanz.sty internally does \usepackage[ngerman]{babel}.
-%   To enable bidi support for Urdu/Arabic script WITHOUT re-loading
-%   babel (which would raise the "package babel has already been loaded
-%   with options" error), we pass `bidi=basic` as a GLOBAL class option.
-%   babel will pick it up when themeKonstanz loads it.
-\documentclass[rgb,bidi=basic]{article}
+% NOTE on babel / bidi:
+%   - themeKonstanz.sty internally does \usepackage[ngerman]{babel}.
+%     So we MUST NOT load babel again -- it would raise the
+%     "package babel has already been loaded with options" error.
+%   - babel option `bidi=basic` works ONLY with LuaLaTeX. With XeLaTeX
+%     it raises the `bidi-only-lua` error. For XeLaTeX we therefore
+%     leave bidi at babel's default (`bidi=default`), which is enough
+%     for the short inline Urdu phrases used here.
+%   - If you compile with LuaLaTeX, uncomment the global option line
+%     below (line marked LUA-ONLY) for better bidi handling.
+
+\documentclass[rgb]{article}
+% LUA-ONLY (uncomment for LuaLaTeX):
+% \documentclass[rgb,bidi=basic]{article}
 
 \usepackage{themeKonstanz}
 
