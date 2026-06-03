@@ -29,6 +29,22 @@
 \usepackage{array}
 \usepackage{makecell}
 
+% ---------------------------------------------------------------
+% Font-size helper.
+% NOTE: themeKonstanz's \selectfontsize macro is incompatible with
+% the TeX Live 2025 update of ifthen/xkeyval (it errors with
+% "I'm ignoring this; it doesn't match any \if"). We therefore
+% bypass it completely and use plain LaTeX \fontsize{}{}\selectfont.
+% \fs{<size>} sets the font to <size> with a baseline of 1.2 * size.
+% ---------------------------------------------------------------
+\makeatletter
+\newcommand{\fs}[1]{%
+  \@tempdima=#1\relax
+  \@tempdimb=1.2\@tempdima
+  \fontsize{\@tempdima}{\@tempdimb}\selectfont
+}
+\makeatother
+
 % A0 portrait
 \format{a0}
 
@@ -49,13 +65,13 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % TITLE / HEADLINE             %
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\selectfontsize{130pt}
+\fs{130pt}
 \begin{textfeld}{6cm}{14cm}%
 \markieren{\textbf{UrBLiMP}}{\textbf{A Benchmark for}}{\textbf{Linguistic Competence}}{\textbf{of LLMs in Urdu}}%
 \end{textfeld}%
 
 % Authors / affiliations block
-\selectfontsize[baselinefaktor=14/10]{26pt}
+\fs{26pt}
 \begin{textfeld}[60cm]{6cm}{63cm}%
 \textcolor{seeblau100}{\textbf{Farah Adeeba\textsuperscript{1,2} \quad Brian Dillon\textsuperscript{1} \quad Hassan Sajjad\textsuperscript{3} \quad Rajesh Bhatt\textsuperscript{1}}}\\[0.6cm]
 \textsuperscript{1}Department of Linguistics, UMass Amherst, USA \\
@@ -65,7 +81,7 @@
 \end{textfeld}%
 
 % Right top: "Merken" highlight box - headline statistic
-\selectfontsize[baselinefaktor=14/10]{26pt}
+\fs{26pt}
 \begin{textfeld}{\paperwidth - 32cm}{14cm}%
 \merken{26cm}{\textbf{UrBLiMP at a glance}}{\textbf{5{,}696 minimal pairs} covering \textbf{10 phenomena} and \textbf{19 paradigms} of Urdu syntax. Evaluated on \textbf{20+ multilingual LLMs} against \textbf{17 native speakers}.}
 \end{textfeld}%
@@ -74,10 +90,10 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % MOTIVATION + CONTRIBUTIONS   %
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\selectfontsize[baselinefaktor=13/10]{26pt}
+\fs{26pt}
 
 \begin{textfeld}{6cm}{72cm}%
-\cdblock[width=72.1cm, columnnum=2, columnspace=3cm, outertop=verylong, outerbottom=long, inner=long]{\selectfontsize{36pt}\underline{\textbf{Motivation \& Contributions}}}%
+\cdblock[width=72.1cm, columnnum=2, columnspace=3cm, outertop=verylong, outerbottom=long, inner=long]{\fs{36pt}\underline{\textbf{Motivation \& Contributions}}}%
 {\textcolor{seeblau100}{\textbf{Why Urdu?}}\\[\baselineskip]%
 Large Language Models are evaluated mostly on English. For low-resource, morphologically rich, head-final languages such as \textbf{Urdu} (Indo-Aryan, $\sim$230M speakers, Perso-Arabic script), it is unclear which grammatical phenomena multilingual LLMs actually learn.\\[0.4\baselineskip]%
 Existing minimal-pair benchmarks (BLiMP, CLiMP, SLING, RuBLiMP, TurBLiMP, BLiMP-NL, MultiBLiMP) do not provide broad coverage for Urdu syntax.}%
@@ -92,10 +108,10 @@ $\bullet$~Evaluation of \textbf{20+ LLMs} (BERT, mT5, BLOOMZ, Granite, Gemma-3, 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % PHENOMENA COVERED            %
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\selectfontsize[baselinefaktor=13/10]{24pt}
+\fs{24pt}
 
 \begin{textfeld}{6cm}{125cm}%
-\cdblock[width=72.1cm, columnnum=2, columnspace=3cm, outertop=verylong, outerbottom=long, inner=long]{\selectfontsize{36pt}\underline{\textbf{Linguistic Phenomena in UrBLiMP}}}%
+\cdblock[width=72.1cm, columnnum=2, columnspace=3cm, outertop=verylong, outerbottom=long, inner=long]{\fs{36pt}\underline{\textbf{Linguistic Phenomena in UrBLiMP}}}%
 {\textcolor{seeblau100}{\textbf{Universal \& core syntactic}}\\[0.5\baselineskip]%
 $\bullet$~\textbf{Subject--Verb Agreement} (gender, number, person)\\[0.2\baselineskip]%
 $\bullet$~\textbf{Noun--Adjective Agreement}\\[0.2\baselineskip]%
@@ -121,10 +137,10 @@ $\bullet$~\textbf{Obliqueness} (adj., noun, pronoun, plural, verb)\\[0.5\baselin
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % METHOD / DATA CONSTRUCTION   %
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\selectfontsize[baselinefaktor=13/10]{26pt}
+\fs{26pt}
 
 \begin{textfeld}{6cm}{183cm}%
-\cdblock[width=72.1cm, columnnum=3, columnspace=3cm, outertop=verylong, outerbottom=long, inner=long]{\selectfontsize{36pt}\underline{\textbf{Method}}}%
+\cdblock[width=72.1cm, columnnum=3, columnspace=3cm, outertop=verylong, outerbottom=long, inner=long]{\fs{36pt}\underline{\textbf{Method}}}%
 {\textcolor{seeblau100}{\textbf{1. Source corpora}}\\[\baselineskip]%
 \textbf{Urdu Treebank} (CLE, 7{,}854 sentences, Penn-Treebank style) -- extract sentences via syntactic patterns, e.g.\ \texttt{(VC (VBF) (AUXP))} for aspect.\\[0.4\baselineskip]%
 \textbf{In-house Urdu corpus} -- regex-based extraction (e.g.\ \foreignlanguage{arabic}{جو\dots وہ\dots}) for paradigms with too few treebank hits.}%
@@ -142,10 +158,10 @@ Validated subset: \textbf{1{,}077 pairs}.}%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % EVALUATION SETUP             %
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\selectfontsize[baselinefaktor=13/10]{26pt}
+\fs{26pt}
 
 \begin{textfeld}{6cm}{226cm}%
-\cdblock[width=72.1cm, columnnum=2, columnspace=3cm, outertop=verylong, outerbottom=long, inner=long]{\selectfontsize{36pt}\underline{\textbf{Evaluation Setup}}}%
+\cdblock[width=72.1cm, columnnum=2, columnspace=3cm, outertop=verylong, outerbottom=long, inner=long]{\fs{36pt}\underline{\textbf{Evaluation Setup}}}%
 {\textcolor{seeblau100}{\textbf{Models (20+)}}\\[\baselineskip]%
 $\bullet$~\textbf{Encoder:} mBERT\\[0.2\baselineskip]%
 $\bullet$~\textbf{Encoder--decoder:} mT5-small, mT5-large\\[0.2\baselineskip]%
@@ -162,10 +178,10 @@ GPT-4o evaluated via two-choice prompting (\textit{explain-then-process}).}%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % MAIN RESULTS TABLE           %
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\selectfontsize[baselinefaktor=13/10]{24pt}
+\fs{24pt}
 
 \begin{textfeld}{6cm}{264cm}%
-\cdblock[width=72.1cm, columnnum=1, columnspace=3cm, outertop=verylong, outerbottom=long]{\selectfontsize{36pt}\underline{\textbf{Headline Results -- Average Accuracy across 10 Phenomena}}}%
+\cdblock[width=72.1cm, columnnum=1, columnspace=3cm, outertop=verylong, outerbottom=long]{\fs{36pt}\underline{\textbf{Headline Results -- Average Accuracy across 10 Phenomena}}}%
 {\renewcommand{\arraystretch}{1.4}%
 \begin{tabular}{lr@{\hskip 2cm}lr}
 \textcolor{seeblau100}{\textbf{Model}} & \textcolor{seeblau100}{\textbf{Avg.\ (\%)}} & \textcolor{seeblau100}{\textbf{Model}} & \textcolor{seeblau100}{\textbf{Avg.\ (\%)}} \\
@@ -186,10 +202,10 @@ Gemma-3-27B-pt                    & 92.42          & mT5-large               & 6
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % FINDINGS / ANALYSIS          %
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\selectfontsize[baselinefaktor=13/10]{26pt}
+\fs{26pt}
 
 \begin{textfeld}{6cm}{322cm}%
-\cdblock[width=72.1cm, columnnum=3, columnspace=3cm, outertop=verylong, outerbottom=long, inner=long]{\selectfontsize{36pt}\underline{\textbf{Key Findings}}}%
+\cdblock[width=72.1cm, columnnum=3, columnspace=3cm, outertop=verylong, outerbottom=long, inner=long]{\fs{36pt}\underline{\textbf{Key Findings}}}%
 {\textcolor{seeblau100}{\textbf{Long-distance agreement is hard}}\\[\baselineskip]%
 Even LLaMA-3-70B fails when subject and verb are separated by intervening clauses, e.g.\\[0.3\baselineskip]%
 \foreignlanguage{arabic}{استانی سبق پڑھا کر \dots سوتی}\\[0.2\baselineskip]%
@@ -210,12 +226,12 @@ $\bullet$~UrBLiMP-SVA is \emph{harder} than MultiBLiMP-SVA for the same models.}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % CONCLUSION + RESOURCE BOX    %
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\selectfontsize[baselinefaktor=14/10]{26pt}
+\fs{26pt}
 
 % Left: Conclusion / take-aways
 \begin{textfeld}[42cm]{6cm}{372cm}%
 \cdline[arrowleft=true, arrowright=true]{42cm}\\[0.8cm]%
-\textcolor{seeblau100}{\textbf{\selectfontsize{34pt}Take-aways}}\\[0.6cm]%
+\textcolor{seeblau100}{\textbf{\fs{34pt}Take-aways}}\\[0.6cm]%
 $\bullet$~UrBLiMP is the first broad-coverage minimal-pair benchmark for \textbf{Urdu syntax}.\\[0.3\baselineskip]%
 $\bullet$~Multilingual LLMs handle \textbf{local agreement} well, but struggle with \textbf{long-distance dependencies} and \textbf{morpho-syntactic case}.\\[0.3\baselineskip]%
 $\bullet$~\textbf{Grammar prompting} brings GPT-4o above human average.\\[0.3\baselineskip]%
@@ -223,7 +239,7 @@ $\bullet$~\textbf{Continual pretraining on Urdu} (Alif-8B) beats its LLaMA-3-8B 
 \end{textfeld}%
 
 % Right: Resources / "Merken" box
-\selectfontsize[baselinefaktor=14/10]{26pt}
+\fs{26pt}
 \begin{textfeld}{\paperwidth - 32cm}{372cm}%
 \merken{26cm}{\textbf{Dataset \& code}}{\textbf{github.com/farahadeeba/UrBLiMP}\\[0.4\baselineskip]
 \textbf{5{,}696} minimal pairs\\
@@ -237,7 +253,7 @@ Released under an open-source licence.}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % FOOTER -- venue / handle     %
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\selectfontsize[baselinefaktor=13/10]{28pt}
+\fs{28pt}
 \begin{textfeld}{6cm}{\paperheight - 6cm - 26pt}%
 \textcolor{seeblau100}{\textbf{\textit{-- ACL 2026 Findings \quad $\bullet$ \quad uni-konstanz.de \quad $\bullet$ \quad umass.edu \quad $\bullet$ \quad dal.ca}}}%
 \end{textfeld}%
