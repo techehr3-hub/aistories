@@ -12,8 +12,7 @@
 % NOTE on babel / bidi:
 %   - themeKonstanz.sty internally does \usepackage[ngerman]{babel}.
 %     So we MUST NOT load babel again.
-%   - `bidi=basic` works only with LuaLaTeX. For XeLaTeX we leave bidi
-%     at babel's default (enough for the short inline Urdu phrases).
+%   - `bidi=basic` works only with LuaLaTeX.
 
 \documentclass[rgb]{article}
 % LUA-ONLY (uncomment for LuaLaTeX):
@@ -24,18 +23,14 @@
 % babel is already loaded by themeKonstanz -- DO NOT load it again.
 \babelprovide[import]{arabic}
 
-\usepackage{amssymb}   % \checkmark etc. (used in math mode)
+\usepackage{amssymb}
 \usepackage{booktabs}
 \usepackage{array}
 \usepackage{makecell}
 
 % ---------------------------------------------------------------
-% Font-size helper.
-% NOTE: themeKonstanz's \selectfontsize macro is incompatible with
-% the TeX Live 2025 update of ifthen/xkeyval (it errors with
-% "I'm ignoring this; it doesn't match any \if"). We therefore
-% bypass it completely and use plain LaTeX \fontsize{}{}\selectfont.
-% \fs{<size>} sets the font to <size> with a baseline of 1.2 * size.
+% Font-size helper -- bypasses themeKonstanz's \selectfontsize
+% which breaks on TeX Live 2025 (\ifthenelse expansion issue).
 % ---------------------------------------------------------------
 \makeatletter
 \newcommand{\fs}[1]{%
@@ -50,8 +45,6 @@
 
 \begin{document}
 
-% Fonts: Arial (Uni Konstanz CD) for Latin text,
-% Noto Nastaliq Urdu for Arabic-script Urdu examples.
 \setmainfont{Arial}
 \setsansfont{Arial}
 \babelfont[arabic]{rm}{Noto Nastaliq Urdu}
@@ -89,11 +82,13 @@
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % MOTIVATION + CONTRIBUTIONS   %
+% \cdblock needs 1 headline + 8 column args (pad with {} if unused)
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \fs{26pt}
 
 \begin{textfeld}{6cm}{72cm}%
-\cdblock[width=72.1cm, columnnum=2, columnspace=3cm, outertop=verylong, outerbottom=long, inner=long]{\fs{36pt}\underline{\textbf{Motivation \& Contributions}}}%
+\cdblock[width=72.1cm, columnnum=2, columnspace=3cm, outertop=verylong, outerbottom=long, inner=long]%
+{\fs{36pt}\underline{\textbf{Motivation \& Contributions}}}%
 {\textcolor{seeblau100}{\textbf{Why Urdu?}}\\[\baselineskip]%
 Large Language Models are evaluated mostly on English. For low-resource, morphologically rich, head-final languages such as \textbf{Urdu} (Indo-Aryan, $\sim$230M speakers, Perso-Arabic script), it is unclear which grammatical phenomena multilingual LLMs actually learn.\\[0.4\baselineskip]%
 Existing minimal-pair benchmarks (BLiMP, CLiMP, SLING, RuBLiMP, TurBLiMP, BLiMP-NL, MultiBLiMP) do not provide broad coverage for Urdu syntax.}%
@@ -102,6 +97,7 @@ $\bullet$~A new \textbf{minimal-pairs benchmark for Urdu} built from naturally o
 $\bullet$~Coverage of \textbf{typologically distinctive} phenomena: split ergativity, dative experiencers, honorific agreement, obliqueness, participial relatives, word-order variation.\\[0.3\baselineskip]%
 $\bullet$~\textbf{Two rounds of human validation} with 17 native speakers (1{,}077 pairs).\\[0.3\baselineskip]%
 $\bullet$~Evaluation of \textbf{20+ LLMs} (BERT, mT5, BLOOMZ, Granite, Gemma-3, LLaMA-3, DeepSeek-R1, Alif-Urdu, GPT-4o).}%
+{}{}{}{}{}{}%
 \end{textfeld}%
 
 
@@ -111,7 +107,8 @@ $\bullet$~Evaluation of \textbf{20+ LLMs} (BERT, mT5, BLOOMZ, Granite, Gemma-3, 
 \fs{24pt}
 
 \begin{textfeld}{6cm}{125cm}%
-\cdblock[width=72.1cm, columnnum=2, columnspace=3cm, outertop=verylong, outerbottom=long, inner=long]{\fs{36pt}\underline{\textbf{Linguistic Phenomena in UrBLiMP}}}%
+\cdblock[width=72.1cm, columnnum=2, columnspace=3cm, outertop=verylong, outerbottom=long, inner=long]%
+{\fs{36pt}\underline{\textbf{Linguistic Phenomena in UrBLiMP}}}%
 {\textcolor{seeblau100}{\textbf{Universal \& core syntactic}}\\[0.5\baselineskip]%
 $\bullet$~\textbf{Subject--Verb Agreement} (gender, number, person)\\[0.2\baselineskip]%
 $\bullet$~\textbf{Noun--Adjective Agreement}\\[0.2\baselineskip]%
@@ -131,6 +128,7 @@ $\bullet$~\textbf{Obliqueness} (adj., noun, pronoun, plural, verb)\\[0.5\baselin
 \textbf{\textcolor{seeblau100}{$\checkmark$}}~\foreignlanguage{arabic}{پہرے‌دار نے تمام ماجرا راجا کو سنایا}\\[0.1\baselineskip]
 \textbf{\textcolor{schwarz60}{$\times$}}~\foreignlanguage{arabic}{پہرے‌دار نے تمام ماجرا راجا کو سناتا}\\[0.2\baselineskip]%
 \textit{(ergative \textit{ne} requires perfective verb form)}}%
+{}{}{}{}{}{}%
 \end{textfeld}%
 
 
@@ -140,7 +138,8 @@ $\bullet$~\textbf{Obliqueness} (adj., noun, pronoun, plural, verb)\\[0.5\baselin
 \fs{26pt}
 
 \begin{textfeld}{6cm}{183cm}%
-\cdblock[width=72.1cm, columnnum=3, columnspace=3cm, outertop=verylong, outerbottom=long, inner=long]{\fs{36pt}\underline{\textbf{Method}}}%
+\cdblock[width=72.1cm, columnnum=3, columnspace=3cm, outertop=verylong, outerbottom=long, inner=long]%
+{\fs{36pt}\underline{\textbf{Method}}}%
 {\textcolor{seeblau100}{\textbf{1. Source corpora}}\\[\baselineskip]%
 \textbf{Urdu Treebank} (CLE, 7{,}854 sentences, Penn-Treebank style) -- extract sentences via syntactic patterns, e.g.\ \texttt{(VC (VBF) (AUXP))} for aspect.\\[0.4\baselineskip]%
 \textbf{In-house Urdu corpus} -- regex-based extraction (e.g.\ \foreignlanguage{arabic}{جو\dots وہ\dots}) for paradigms with too few treebank hits.}%
@@ -152,6 +151,7 @@ Manual review + typo cleaning per paradigm.}%
 Round 1: 20-pair training set.\\[0.2\baselineskip]%
 Round 2: $\sim$190 pairs per annotator, 10 per paradigm, randomised, forced-choice acceptability.\\[0.3\baselineskip]%
 Validated subset: \textbf{1{,}077 pairs}.}%
+{}{}{}{}{}%
 \end{textfeld}%
 
 
@@ -161,7 +161,8 @@ Validated subset: \textbf{1{,}077 pairs}.}%
 \fs{26pt}
 
 \begin{textfeld}{6cm}{226cm}%
-\cdblock[width=72.1cm, columnnum=2, columnspace=3cm, outertop=verylong, outerbottom=long, inner=long]{\fs{36pt}\underline{\textbf{Evaluation Setup}}}%
+\cdblock[width=72.1cm, columnnum=2, columnspace=3cm, outertop=verylong, outerbottom=long, inner=long]%
+{\fs{36pt}\underline{\textbf{Evaluation Setup}}}%
 {\textcolor{seeblau100}{\textbf{Models (20+)}}\\[\baselineskip]%
 $\bullet$~\textbf{Encoder:} mBERT\\[0.2\baselineskip]%
 $\bullet$~\textbf{Encoder--decoder:} mT5-small, mT5-large\\[0.2\baselineskip]%
@@ -172,6 +173,7 @@ $\bullet$~\textbf{Closed:} GPT-4o (Base, Grammar-Prompt, GP+CoT)}%
 Sentence-level \textbf{accuracy}: fraction of pairs where the model assigns lower (pseudo-)perplexity to the grammatical sentence.\\[0.4\baselineskip]%
 \[\text{Acc} = \tfrac{1}{N}\sum_{i=1}^{N}\mathbb{I}\!\left[\text{ppl}(s^{i}_{\text{good}}) < \text{ppl}(s^{i}_{\text{bad}})\right]\]\\[0.2\baselineskip]%
 GPT-4o evaluated via two-choice prompting (\textit{explain-then-process}).}%
+{}{}{}{}{}{}%
 \end{textfeld}%
 
 
@@ -181,7 +183,8 @@ GPT-4o evaluated via two-choice prompting (\textit{explain-then-process}).}%
 \fs{24pt}
 
 \begin{textfeld}{6cm}{264cm}%
-\cdblock[width=72.1cm, columnnum=1, columnspace=3cm, outertop=verylong, outerbottom=long]{\fs{36pt}\underline{\textbf{Headline Results -- Average Accuracy across 10 Phenomena}}}%
+\cdblock[width=72.1cm, columnnum=1, columnspace=3cm, outertop=verylong, outerbottom=long]%
+{\fs{36pt}\underline{\textbf{Headline Results -- Average Accuracy across 10 Phenomena}}}%
 {\renewcommand{\arraystretch}{1.4}%
 \begin{tabular}{lr@{\hskip 2cm}lr}
 \textcolor{seeblau100}{\textbf{Model}} & \textcolor{seeblau100}{\textbf{Avg.\ (\%)}} & \textcolor{seeblau100}{\textbf{Model}} & \textcolor{seeblau100}{\textbf{Avg.\ (\%)}} \\
@@ -194,8 +197,9 @@ Alif-1.0-8B-Instruct (Urdu)       & 93.25          & mBERT                   & 7
 Gemma-3-27B-pt                    & 92.42          & mT5-large               & 63.36 \\
 \midrule
 \rowcolor{seeblau20}\textbf{Human (native speakers)} & \textbf{96.28} & mT5-small & 50.69 \\
-\end{tabular}}\\[0.6\baselineskip]%
+\end{tabular}\\[0.6\baselineskip]%
 \textit{GPT-4o with Grammar-Prompting is the only model to exceed human average. Open-weight LLaMA-3-70B and Urdu-adapted Alif-8B are competitive with humans. Smaller encoder/decoder models (mBERT, mT5) are far behind.}}%
+{}{}{}{}{}{}{}%
 \end{textfeld}%
 
 
@@ -205,7 +209,8 @@ Gemma-3-27B-pt                    & 92.42          & mT5-large               & 6
 \fs{26pt}
 
 \begin{textfeld}{6cm}{322cm}%
-\cdblock[width=72.1cm, columnnum=3, columnspace=3cm, outertop=verylong, outerbottom=long, inner=long]{\fs{36pt}\underline{\textbf{Key Findings}}}%
+\cdblock[width=72.1cm, columnnum=3, columnspace=3cm, outertop=verylong, outerbottom=long, inner=long]%
+{\fs{36pt}\underline{\textbf{Key Findings}}}%
 {\textcolor{seeblau100}{\textbf{Long-distance agreement is hard}}\\[\baselineskip]%
 Even LLaMA-3-70B fails when subject and verb are separated by intervening clauses, e.g.\\[0.3\baselineskip]%
 \foreignlanguage{arabic}{استانی سبق پڑھا کر \dots سوتی}\\[0.2\baselineskip]%
@@ -220,6 +225,7 @@ $\bullet$~\textbf{Obliqueness}: hard for adjectives \& masc.\ sg.\ nouns (subtle
 $\bullet$~\textbf{Subj--Verb gender}: hardest, max 92.5\%.\\[0.2\baselineskip]%
 $\bullet$~\textbf{Honorific}: requires world / register knowledge.\\[0.2\baselineskip]%
 $\bullet$~UrBLiMP-SVA is \emph{harder} than MultiBLiMP-SVA for the same models.}%
+{}{}{}{}{}%
 \end{textfeld}%
 
 
