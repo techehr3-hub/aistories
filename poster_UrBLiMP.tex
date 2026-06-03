@@ -35,11 +35,15 @@
 \definecolor{schwarz40}{gray}{0.60}
 \definecolor{schwarz20}{gray}{0.80}
 \definecolor{schwarz10}{gray}{0.90}
+\definecolor{checkgreen}{RGB}{34,139,34}
 % -----------------------------------------------------------
 
 \setmainfont{Arial}
 \setsansfont{Arial}
 \babelfont[arabic]{rm}{Noto Nastaliq Urdu}
+
+% Force black body text everywhere
+\AtBeginDocument{\color{black}}
 
 % ---------- Phenomenon card -------------------------------
 % Pure minipage + fcolorbox: no TikZ baseline issues.
@@ -48,12 +52,13 @@
 \begin{minipage}[t]{0.31\linewidth}
 \fcolorbox{seeblau35}{seeblau20!40}{%
 \begin{minipage}[t]{\dimexpr\linewidth-2\fboxsep-2\fboxrule\relax}
+\color{black}%
 \tikz\node[circle,fill=seeblau100,text=white,
            inner sep=2pt,minimum size=14pt,
            font=\bfseries\scriptsize]{#1};\,%
-\textbf{\textcolor{seeblau100}{\small #2}}\\[2pt]
+\textbf{\small #2}\\[2pt]
 \footnotesize
-\textcolor{seeblau100}{$\checkmark$}~\foreignlanguage{arabic}{#3}\\
+\textcolor{checkgreen}{$\checkmark$}~\foreignlanguage{arabic}{#3}\\
 \textcolor{schwarz60}{$\times$}~\foreignlanguage{arabic}{#4}
 \end{minipage}}%
 \end{minipage}%
@@ -70,7 +75,7 @@
   borderColor=seeblau100,
   headerColorOne=seeblau100,
   headerColorTwo=seeblau65,
-  headerFontColor=white,
+  headerFontColor=black,
   boxColorOne=white,
   textborder=rounded,
   eyecatcher=true,
@@ -85,7 +90,7 @@
   {\includegraphics[height=8em]{graphics/UniKonstanz_Logo_Optimum.pdf}}%
   {\colorbox{seeblau100}{\parbox{8em}{\centering\color{white}\bfseries
     Universit\"at\\Konstanz}}}}
-{\color{seeblau100}\bfseries UrBLiMP: A Benchmark for Evaluating the Linguistic
+{\color{black}\bfseries UrBLiMP: A Benchmark for Evaluating the Linguistic
   Competence of Large Language Models in Urdu}
 {\color{black}\normalsize
 \parbox{0.95\linewidth}{\centering
@@ -95,20 +100,20 @@
  $^{2}$Cluster of Excellence ``The Politics of Inequality'', University of Konstanz, Germany \quad
  $^{3}$Faculty of Computer Science, Dalhousie University, Halifax, Canada \\[2pt]
  \textit{ACL 2026 Findings} \;$\bullet$\; \texttt{farah.adeeba@uni-konstanz.de}}}
-{\color{seeblau100}\Large\bfseries ACL\\[-2pt]2026}
+{\color{black}\Large\bfseries ACL\\[-2pt]2026}
 
 
 %====================================================================
 % ROW 1
 %====================================================================
 \headerbox{Motivation \& Contributions}{name=motiv,column=0,row=0}{
-\textcolor{seeblau100}{\textbf{Why Urdu?}}\\
+\textbf{Why Urdu?}\\
 LLMs are mostly evaluated on English. For low-resource, morphologically rich,
 head-final languages such as \textbf{Urdu} (Indo-Aryan, $\sim$230M speakers,
 Perso-Arabic script), it is unclear which grammatical phenomena multilingual
 LLMs actually learn. Existing minimal-pair benchmarks (BLiMP, CLiMP, SLING,
 RuBLiMP, TurBLiMP, BLiMP-NL, MultiBLiMP) lack broad coverage for Urdu.\\[4pt]
-\textcolor{seeblau100}{\textbf{Our contributions}}
+\textbf{Our contributions}
 \begin{itemize}
 \item First broad-coverage minimal-pairs benchmark for \textbf{Urdu syntax}.
 \item \textbf{5{,}696} pairs, \textbf{10} phenomena, \textbf{19} paradigms.
@@ -132,9 +137,8 @@ RuBLiMP, TurBLiMP, BLiMP-NL, MultiBLiMP) lack broad coverage for Urdu.\\[4pt]
      17/{annotators}/3,
      20/{LLMs}/4}{
     \node[circle,draw=seeblau100,line width=1.5pt,fill=seeblau20!50,
-          minimum size=2.2cm,align=center] at (\x*2.4,0)
-          {\textcolor{seeblau100}{\bfseries\large\v}\\[-2pt]
-           \footnotesize \l};
+          minimum size=2.2cm,align=center,text=black] at (\x*2.4,0)
+          {\bfseries\large\v\\[-2pt]\footnotesize \l};
   }
 \end{tikzpicture}\\[6pt]
 \raggedright\footnotesize
@@ -183,8 +187,9 @@ RuBLiMP, TurBLiMP, BLiMP-NL, MultiBLiMP) lack broad coverage for Urdu.\\[4pt]
 \begin{minipage}[t]{0.62\linewidth}
 \fcolorbox{seeblau100}{white}{%
 \begin{minipage}[t]{\dimexpr\linewidth-2\fboxsep-2\fboxrule\relax}
+\color{black}%
 \small\textbf{How to read a card:} each badge shows the
-\textcolor{seeblau100}{$\checkmark$}~\textbf{grammatical} sentence and the
+\textcolor{checkgreen}{$\checkmark$}~\textbf{grammatical} sentence and the
 \textcolor{schwarz60}{$\times$}~\textbf{ungrammatical} minimal-pair
 counterpart, differing by one underlined morpheme.
 \end{minipage}}
@@ -201,23 +206,24 @@ counterpart, differing by one underlined morpheme.
    node distance=10pt and 14pt,
    stepbox/.style={draw=seeblau100,line width=1.2pt,fill=seeblau20!40,
                    rounded corners=6pt,inner sep=8pt,
-                   text width=0.27\linewidth,align=left,font=\footnotesize},
+                   text width=0.27\linewidth,align=left,font=\footnotesize,
+                   text=black},
    steparrow/.style={-Stealth,line width=2pt,draw=seeblau100}
 ]
   \node[stepbox] (s1) {%
-    \textcolor{seeblau100}{\textbf{1. Source corpora}}\\[3pt]
+    \textbf{1. Source corpora}\\[3pt]
     \textbf{Urdu Treebank} (CLE, 7{,}854 sentences) -- extract via syntactic
     patterns, e.g.\ \texttt{(VC (VBF) (AUXP))}.\\[3pt]
     \textbf{In-house corpus} -- regex extraction
     (\foreignlanguage{arabic}{جو\dots وہ\dots}) for sparse paradigms.};
   \node[stepbox,right=of s1] (s2) {%
-    \textcolor{seeblau100}{\textbf{2. Pair generation}}\\[3pt]
+    \textbf{2. Pair generation}\\[3pt]
     Rule-based perturbation of \emph{one} minimal feature
     (swap aspect aux., drop \textit{ko}, change verb gender, \dots) to derive
     the \textbf{ungrammatical} counterpart.\\[3pt]
     Manual review + typo cleaning per paradigm.};
   \node[stepbox,right=of s2] (s3) {%
-    \textcolor{seeblau100}{\textbf{3. Human validation (PCIbex)}}\\[3pt]
+    \textbf{3. Human validation (PCIbex)}\\[3pt]
     \textbf{17 native Urdu speakers}, two rounds.\\
     R1: 20-pair training set.\\
     R2: $\sim$190 pairs/annotator, 10/paradigm, randomised, forced-choice.\\[3pt]
@@ -232,7 +238,7 @@ counterpart, differing by one underlined morpheme.
 % ROW 4 -- Evaluation + Results
 %====================================================================
 \headerbox{Evaluation Setup}{name=eval,column=0,below=method}{
-\textcolor{seeblau100}{\textbf{Models (20+)}}
+\textbf{Models (20+)}
 \begin{itemize}
 \item \textbf{Encoder:} mBERT
 \item \textbf{Encoder--decoder:} mT5-small, mT5-large
@@ -241,7 +247,7 @@ counterpart, differing by one underlined morpheme.
 \item \textbf{Urdu-tuned:} Alif-1.0-8B-Instruct
 \item \textbf{Closed:} GPT-4o (Base, Grammar-Prompt, GP+CoT)
 \end{itemize}
-\textcolor{seeblau100}{\textbf{Metric}} -- sentence-level accuracy:
+\textbf{Metric} -- sentence-level accuracy:
 \[\text{Acc} = \tfrac{1}{N}\sum_{i=1}^{N}\mathbb{I}\!\left[
    \text{ppl}(s^{i}_{\text{good}}) < \text{ppl}(s^{i}_{\text{bad}})\right]\]
 GPT-4o evaluated via two-choice prompting (\textit{explain-then-process}).
@@ -267,9 +273,9 @@ GPT-4o evaluated via two-choice prompting (\textit{explain-then-process}).
         DeepSeek-70B,Gemma-3-12B,Gemma-3-27B,Alif-8B,GPT-4o (CoT),
         LLaMA-3-70B,GPT-4o (Base),Human,GPT-4o (GP)},
    nodes near coords,nodes near coords align={horizontal},
-   nodes near coords style={font=\scriptsize},
-   tick label style={font=\scriptsize},
-   label style={font=\footnotesize},
+   nodes near coords style={font=\scriptsize,text=black},
+   tick label style={font=\scriptsize,text=black},
+   label style={font=\footnotesize,text=black},
 ]
 \addplot[fill=seeblau100,draw=seeblau100] coordinates {
    (50.69,mT5small) (63.36,mT5large) (78.77,mBERT)
@@ -295,7 +301,7 @@ human baseline. LLaMA-3-70B \& Urdu-tuned Alif-8B are within reach.}}
 \headerbox{Key Findings}{name=findings,column=0,below=eval,span=2}{
 \begin{minipage}[t]{0.36\linewidth}
 \centering
-\textcolor{seeblau100}{\textbf{Size $\neq$ better}}\\[4pt]
+\textbf{Size $\neq$ better}\\[4pt]
 \begin{tikzpicture}
 \begin{axis}[
    ybar,
@@ -306,9 +312,9 @@ human baseline. LLaMA-3-70B \& Urdu-tuned Alif-8B are within reach.}}
    symbolic x coords={1B,4B,12B,27B},
    xtick=data,
    nodes near coords,
-   nodes near coords style={font=\scriptsize},
-   tick label style={font=\scriptsize},
-   label style={font=\footnotesize},
+   nodes near coords style={font=\scriptsize,text=black},
+   tick label style={font=\scriptsize,text=black},
+   label style={font=\footnotesize,text=black},
    ymajorgrids=true,grid style=dashed,
 ]
 \addplot[fill=seeblau100,draw=seeblau100] coordinates {
@@ -322,18 +328,18 @@ human baseline. LLaMA-3-70B \& Urdu-tuned Alif-8B are within reach.}}
 $\approx$ Alif-8B (no sig.\ diff.\ among top models).}
 \end{minipage}\hfill
 \begin{minipage}[t]{0.30\linewidth}
-\textcolor{seeblau100}{\textbf{Long-distance agreement is hard}}\\[3pt]
+\textbf{Long-distance agreement is hard}\\[3pt]
 Even LLaMA-3-70B fails when subject \& verb are separated by intervening
 clauses:\\[2pt]
 \foreignlanguage{arabic}{استانی سبق پڑھا کر \dots \underline{سوتی}}\\[2pt]
 {\footnotesize The longer the dependency, the more LMs default to local
 cues.}\\[6pt]
-\textcolor{seeblau100}{\textbf{Pretrained $>$ Instruction-tuned}}\\[3pt]
+\textbf{Pretrained $>$ Instruction-tuned}\\[3pt]
 On Gemma-3 (1B/4B/12B): instruction tuning can \emph{hurt} grammatical
 sensitivity in 8/10 phenomena.
 \end{minipage}\hfill
 \begin{minipage}[t]{0.30\linewidth}
-\textcolor{seeblau100}{\textbf{Phenomenon-specific}}
+\textbf{Phenomenon-specific}
 \begin{itemize}
 \item \textbf{Aspect, Dative:} near-perfect (local cues).
 \item \textbf{Obliqueness:} hard for adjectives \& masc.\ sg.\ nouns
@@ -363,8 +369,8 @@ sensitivity in 8/10 phenomena.
 \end{itemize}
 \vfill
 \centering
-{\footnotesize\textcolor{seeblau100}{\textbf{\textit{ACL 2026 Findings
-   \;$\bullet$\; uni-konstanz.de \;$\bullet$\; umass.edu \;$\bullet$\; dal.ca}}}}
+{\footnotesize\textbf{\textit{ACL 2026 Findings
+   \;$\bullet$\; uni-konstanz.de \;$\bullet$\; umass.edu \;$\bullet$\; dal.ca}}}
 }
 
 \end{poster}
