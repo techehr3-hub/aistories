@@ -9,13 +9,20 @@
 %                                                     %
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-\documentclass[rgb]{article}
+% NOTE on babel:
+%   themeKonstanz.sty internally does \usepackage[ngerman]{babel}.
+%   To enable bidi support for Urdu/Arabic script WITHOUT re-loading
+%   babel (which would raise the "package babel has already been loaded
+%   with options" error), we pass `bidi=basic` as a GLOBAL class option.
+%   babel will pick it up when themeKonstanz loads it.
+\documentclass[rgb,bidi=basic]{article}
 
 \usepackage{themeKonstanz}
 
-% Additional packages needed for Urdu script + tables
-\usepackage[bidi=basic]{babel}
+% babel is already loaded by themeKonstanz -- DO NOT load it again.
+% Just import the Arabic locale on top of the existing babel instance.
 \babelprovide[import]{arabic}
+
 \usepackage{booktabs}
 \usepackage{array}
 \usepackage{makecell}
