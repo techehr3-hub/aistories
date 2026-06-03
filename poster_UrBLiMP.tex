@@ -41,24 +41,22 @@
 \setsansfont{Arial}
 \babelfont[arabic]{rm}{Noto Nastaliq Urdu}
 
-% ---------- Phenomenon card (visual) ----------
+% ---------- Phenomenon card -------------------------------
+% Pure minipage + fcolorbox: no TikZ baseline issues.
+% \phencard{<badge letter>}{<phenomenon name>}{<good Urdu>}{<bad Urdu>}
 \newcommand{\phencard}[4]{%
-\begin{tikzpicture}[baseline=(card.north)]
-  \node[draw=seeblau35,line width=1pt,rounded corners=4pt,
-        fill=seeblau20!40,inner sep=6pt,
-        text width=0.30\linewidth,align=left] (card) {%
-    \begin{tikzpicture}
-      \node[circle,fill=seeblau100,text=white,inner sep=3pt,
-            minimum size=18pt,font=\bfseries\small] (ic) {#1};
-      \node[right=4pt of ic,font=\small\bfseries,
-            text=seeblau100,text width=0.78\linewidth]
-            {#2};
-    \end{tikzpicture}\\[2pt]
-    \footnotesize
-    \textcolor{seeblau100}{$\checkmark$}~\foreignlanguage{arabic}{#3}\\
-    \textcolor{schwarz60}{$\times$}~\foreignlanguage{arabic}{#4}%
-  };
-\end{tikzpicture}%
+\begin{minipage}[t]{0.31\linewidth}
+\fcolorbox{seeblau35}{seeblau20!40}{%
+\begin{minipage}[t]{\dimexpr\linewidth-2\fboxsep-2\fboxrule\relax}
+\tikz\node[circle,fill=seeblau100,text=white,
+           inner sep=2pt,minimum size=14pt,
+           font=\bfseries\scriptsize]{#1};\,%
+\textbf{\textcolor{seeblau100}{\small #2}}\\[2pt]
+\footnotesize
+\textcolor{seeblau100}{$\checkmark$}~\foreignlanguage{arabic}{#3}\\
+\textcolor{schwarz60}{$\times$}~\foreignlanguage{arabic}{#4}
+\end{minipage}}%
+\end{minipage}%
 }
 
 \begin{document}
@@ -182,14 +180,15 @@ RuBLiMP, TurBLiMP, BLiMP-NL, MultiBLiMP) lack broad coverage for Urdu.\\[4pt]
 \phencard{W}{Word-Order Variation}%
   {جو \underline{بات} ہے وہ بولو}%
   {جو ہے وہ بولو بات}\hfill
-\begin{tikzpicture}[baseline=(legend.north)]
-  \node[draw=seeblau100,line width=1pt,rounded corners=4pt,
-        fill=white,inner sep=8pt,text width=0.62\linewidth] (legend) {%
-    \small\textbf{How to read a card:} each badge shows the
-    \textcolor{seeblau100}{$\checkmark$}~\textbf{grammatical} sentence and the
-    \textcolor{schwarz60}{$\times$}~\textbf{ungrammatical} minimal-pair
-    counterpart, differing by one underlined morpheme.};
-\end{tikzpicture}
+\begin{minipage}[t]{0.62\linewidth}
+\fcolorbox{seeblau100}{white}{%
+\begin{minipage}[t]{\dimexpr\linewidth-2\fboxsep-2\fboxrule\relax}
+\small\textbf{How to read a card:} each badge shows the
+\textcolor{seeblau100}{$\checkmark$}~\textbf{grammatical} sentence and the
+\textcolor{schwarz60}{$\times$}~\textbf{ungrammatical} minimal-pair
+counterpart, differing by one underlined morpheme.
+\end{minipage}}
+\end{minipage}
 }
 
 
@@ -251,8 +250,6 @@ GPT-4o evaluated via two-choice prompting (\textit{explain-then-process}).
 \headerbox{Headline Results -- Avg.\ Accuracy across 10 Phenomena}%
 {name=results,column=1,below=method}{
 \centering
-% NOTE: pgfplots' symbolic coords cannot contain spaces or parentheses,
-% so we use safe identifiers internally and pretty labels via yticklabels.
 \begin{tikzpicture}
 \begin{axis}[
    xbar,
