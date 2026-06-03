@@ -6,7 +6,7 @@
 %          fonts: Arial (system), Noto Nastaliq Urdu  %
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-\documentclass[a0paper,portrait,fontscale=0.42]{baposter}
+\documentclass[a0paper,portrait,fontscale=0.40]{baposter}
 
 \usepackage{fontspec}
 \usepackage[bidi=basic]{babel}
@@ -21,23 +21,46 @@
 \usepackage{enumitem}
 \setlist{nosep,leftmargin=*}
 
+\usepackage{tikz}
+\usetikzlibrary{positioning,shapes.geometric,backgrounds,fit,arrows.meta,calc}
+\usepackage{pgfplots}
+\pgfplotsset{compat=1.18}
+
 % ---------- Uni Konstanz Corporate Design colours ----------
-% Seeblau (primary identity colour) in four saturation levels
 \definecolor{seeblau100}{RGB}{0,165,213}
 \definecolor{seeblau65} {RGB}{89,194,225}
 \definecolor{seeblau35} {RGB}{166,221,235}
 \definecolor{seeblau20} {RGB}{205,236,243}
-% Greyscale alternates
 \definecolor{schwarz60}{gray}{0.40}
 \definecolor{schwarz40}{gray}{0.60}
 \definecolor{schwarz20}{gray}{0.80}
 \definecolor{schwarz10}{gray}{0.90}
 % -----------------------------------------------------------
 
-% Fonts: Arial for Latin (Uni Konstanz CD), Nastaliq for Urdu
 \setmainfont{Arial}
 \setsansfont{Arial}
 \babelfont[arabic]{rm}{Noto Nastaliq Urdu}
+
+% ---------- Phenomenon card (visual) ----------
+% \phencard{<icon glyph>}{<phenomenon name>}{<good Urdu>}{<bad Urdu>}
+\newcommand{\phencard}[4]{%
+\begin{tikzpicture}[baseline=(card.north)]
+  \node[draw=seeblau35,line width=1pt,rounded corners=4pt,
+        fill=seeblau20!40,inner sep=6pt,
+        text width=0.30\linewidth,align=left] (card) {%
+    \begin{tikzpicture}
+      \node[circle,fill=seeblau100,text=white,inner sep=3pt,
+            minimum size=18pt,font=\bfseries\small] (ic) {#1};
+      \node[right=4pt of ic,font=\small\bfseries,
+            text=seeblau100,text width=0.78\linewidth]
+            {#2};
+    \end{tikzpicture}\\[2pt]
+    \footnotesize
+    \textcolor{seeblau100}{$\checkmark$}~\foreignlanguage{arabic}{#3}\\
+    \textcolor{schwarz60}{$\times$}~\foreignlanguage{arabic}{#4}%
+  };
+\end{tikzpicture}%
+}
 
 \begin{document}
 
@@ -54,26 +77,30 @@
   boxColorOne=white,
   textborder=rounded,
   eyecatcher=true,
-  headerheight=0.10\textheight,
+  headerheight=0.16\textheight,
   headershape=rounded,
   headerfont=\Large\bfseries,
   boxshade=plain,
   background=none,
   linewidth=2pt
 }
-%%% LEFT EYE CATCHER -- Uni Konstanz logo
-{\includegraphics[height=8em]{graphics/UniKonstanz_Logo_Optimum.pdf}}
+%%% LEFT EYE CATCHER -- Uni Konstanz logo (with safe fallback)
+{\IfFileExists{graphics/UniKonstanz_Logo_Optimum.pdf}%
+  {\includegraphics[height=8em]{graphics/UniKonstanz_Logo_Optimum.pdf}}%
+  {\colorbox{seeblau100}{\parbox{8em}{\centering\color{white}\bfseries
+    Universit\"at\\Konstanz}}}}
 %%% TITLE
 {\color{seeblau100}\bfseries UrBLiMP: A Benchmark for Evaluating the Linguistic
   Competence of Large Language Models in Urdu}
-%%% AUTHORS
+%%% AUTHORS (wrapped in parbox so baposter keeps the whole block together)
 {\color{black}\normalsize
- Farah Adeeba$^{1,2}$ \quad Brian Dillon$^{1}$ \quad Hassan Sajjad$^{3}$ \quad Rajesh Bhatt$^{1}$\\[2pt]
+\parbox{0.95\linewidth}{\centering
+ Farah Adeeba$^{1,2}$ \quad Brian Dillon$^{1}$ \quad Hassan Sajjad$^{3}$ \quad Rajesh Bhatt$^{1}$\\[3pt]
  \footnotesize
- $^{1}$Department of Linguistics, UMass Amherst \quad
- $^{2}$Cluster of Excellence ``The Politics of Inequality'', University of Konstanz \quad
- $^{3}$Faculty of Computer Science, Dalhousie University \\
- \textit{ACL 2026 Findings} \;$\bullet$\; \texttt{farah.adeeba@uni-konstanz.de}}
+ $^{1}$Department of Linguistics, UMass Amherst, USA \quad
+ $^{2}$Cluster of Excellence ``The Politics of Inequality'', University of Konstanz, Germany \quad
+ $^{3}$Faculty of Computer Science, Dalhousie University, Halifax, Canada \\[2pt]
+ \textit{ACL 2026 Findings} \;$\bullet$\; \texttt{farah.adeeba@uni-konstanz.de}}}
 %%% RIGHT EYE CATCHER -- venue badge
 {\color{seeblau100}\Large\bfseries ACL\\[-2pt]2026}
 
@@ -92,10 +119,11 @@ RuBLiMP, TurBLiMP, BLiMP-NL, MultiBLiMP) lack broad coverage for Urdu.\\[4pt]
 \begin{itemize}
 \item First broad-coverage minimal-pairs benchmark for \textbf{Urdu syntax}.
 \item \textbf{5{,}696} pairs, \textbf{10} phenomena, \textbf{19} paradigms.
-\item Coverage of typologically distinctive phenomena: split ergativity,
-      dative experiencers, honorific agreement, obliqueness, participial
-      relatives, word-order variation.
-\item \textbf{Two-round human validation} with 17 native speakers (1{,}077 pairs).
+\item Typologically distinctive coverage: split ergativity, dative
+      experiencers, honorific agreement, obliqueness, participial relatives,
+      word-order variation.
+\item \textbf{Two-round human validation} with 17 native speakers
+      (1{,}077 pairs).
 \item Evaluation of \textbf{20+ LLMs}: BERT, mT5, BLOOMZ, Granite, Gemma-3,
       LLaMA-3, DeepSeek-R1, Alif-Urdu, GPT-4o.
 \end{itemize}
@@ -103,84 +131,110 @@ RuBLiMP, TurBLiMP, BLiMP-NL, MultiBLiMP) lack broad coverage for Urdu.\\[4pt]
 
 \headerbox{UrBLiMP at a Glance}{name=glance,column=1,row=0}{
 \centering
-\renewcommand{\arraystretch}{1.4}
-\begin{tabular}{rl}
-\textcolor{seeblau100}{\Large\textbf{5{,}696}} & minimal pairs \\
-\textcolor{seeblau100}{\Large\textbf{10}}      & linguistic phenomena \\
-\textcolor{seeblau100}{\Large\textbf{19}}      & paradigms \\
-\textcolor{seeblau100}{\Large\textbf{17}}      & native annotators \\
-\textcolor{seeblau100}{\Large\textbf{20+}}     & evaluated LLMs \\
-\end{tabular}\\[6pt]
-\raggedright
-\textbf{Source corpora:} Urdu Treebank (7{,}854 sentences, Penn-Treebank style)
-+ in-house Urdu corpus.\\[2pt]
-\textbf{Validation:} two-round forced-choice acceptability on PCIbex.\\[2pt]
+\begin{tikzpicture}
+  \foreach \v/\l/\x in {%
+     5696/{minimal pairs}/0,
+     10/{phenomena}/1,
+     19/{paradigms}/2,
+     17/{annotators}/3,
+     20/{LLMs}/4}{
+    \node[circle,draw=seeblau100,line width=1.5pt,fill=seeblau20!50,
+          minimum size=2.2cm,align=center] at (\x*2.4,0)
+          {\textcolor{seeblau100}{\bfseries\large\v}\\[-2pt]
+           \footnotesize \l};
+  }
+\end{tikzpicture}\\[6pt]
+\raggedright\footnotesize
+\textbf{Sources:} Urdu Treebank (CLE, 7{,}854 sentences) + in-house Urdu corpus.\\
+\textbf{Validation:} two-round forced-choice acceptability on PCIbex.\\
 \textbf{Code \& data:} \texttt{github.com/farahadeeba/UrBLiMP}
 }
 
 
 %====================================================================
-% ROW 2 -- Linguistic phenomena
+% ROW 2 -- Linguistic phenomena AS VISUAL CARDS
 %====================================================================
-\headerbox{Linguistic Phenomena}{name=phen,column=0,below=motiv,span=2}{
-\begin{minipage}[t]{0.48\linewidth}
-\textcolor{seeblau100}{\textbf{Universal \& core syntactic}}
-\begin{itemize}
-\item Subject--Verb Agreement (gender, number, person)
-\item Noun--Adjective Agreement
-\item Dative Object marking (\textit{ko})
-\item Word-Order Variation in relative clauses
-\item Participial Relatives
-\end{itemize}
-\vspace{2pt}
-\textit{Example (gender agr., long distance):}\\
-\foreignlanguage{arabic}{استانی سبق پڑھا کر آرام سے کرسی پر بیٹھ کر سوتی۔}\\
-\textit{`After teaching, the teacher would sit and sleep.'}
-\end{minipage}\hfill
-\begin{minipage}[t]{0.48\linewidth}
-\textcolor{seeblau100}{\textbf{Typologically distinctive (Indo-Aryan)}}
-\begin{itemize}
-\item Aspect Agreement (\textit{-ta:} / \textit{raha:} / \textit{cuka:})
-\item Ergativity -- split system, \textit{ne} marking
-\item Experiencer Subject -- dative \textit{mujhe}
-\item Honorific plural agreement
-\item Obliqueness (adj., noun, pronoun, plural, verb)
-\end{itemize}
-\vspace{2pt}
-\textit{Minimal pair (Ergativity):}\\
-\textbf{\textcolor{seeblau100}{$\checkmark$}}~\foreignlanguage{arabic}{پہرے‌دار نے تمام ماجرا راجا کو سنایا}\\
-\textbf{\textcolor{schwarz60}{$\times$}}~\foreignlanguage{arabic}{پہرے‌دار نے تمام ماجرا راجا کو سناتا}\\
-\textit{(ergative \textit{ne} requires perfective verb form)}
-\end{minipage}
+\headerbox{Linguistic Phenomena -- 10 cards, one per phenomenon}%
+{name=phen,column=0,below=motiv,span=2}{
+\centering
+% Row 1 of cards
+\phencard{A}{Aspect Agreement}%
+  {وہ ملتا \underline{رہا} تھا}%
+  {وہ ملتا \underline{چکا} تھا}\hfill
+\phencard{D}{Dative Object}%
+  {ماجرا راجا \underline{کو} سنایا}%
+  {ماجرا راجا سنایا}\hfill
+\phencard{E}{Ergativity}%
+  {نے ماجرا \underline{سنایا}}%
+  {نے ماجرا \underline{سناتا}}\\[6pt]
+% Row 2 of cards
+\phencard{X}{Experiencer Subject}%
+  {\underline{مجھے} پسند آیا}%
+  {\underline{میں} پسند آیا}\hfill
+\phencard{H}{Honorific}%
+  {بہن جی ناراض \underline{تھیں}}%
+  {بہن جی ناراض \underline{تھی}}\hfill
+\phencard{N}{N--J Agreement}%
+  {بیس فٹ \underline{اونچا} ہے}%
+  {بیس فٹ \underline{اونچی} ہے}\\[6pt]
+% Row 3 of cards
+\phencard{O}{Obliqueness}%
+  {\underline{بڑے} صاحب نے کہا}%
+  {\underline{بڑا} صاحب نے کہا}\hfill
+\phencard{P}{Participial Relatives}%
+  {\underline{کھولا} گیا دروازہ}%
+  {\underline{کھولتا} گیا دروازہ}\hfill
+\phencard{S}{Subject--Verb Agr}%
+  {باپ پاگل ہو \underline{جاتا}}%
+  {باپ پاگل ہو \underline{جاتی}}\\[6pt]
+% Row 4 (centered single card)
+\phencard{W}{Word-Order Variation}%
+  {جو \underline{بات} ہے وہ بولو}%
+  {جو ہے وہ بولو بات}\hfill
+\begin{tikzpicture}[baseline=(legend.north)]
+  \node[draw=seeblau100,line width=1pt,rounded corners=4pt,
+        fill=white,inner sep=8pt,text width=0.62\linewidth] (legend) {%
+    \small\textbf{How to read a card:} each badge shows the
+    \textcolor{seeblau100}{$\checkmark$}~\textbf{grammatical} sentence and the
+    \textcolor{schwarz60}{$\times$}~\textbf{ungrammatical} minimal-pair
+    counterpart, differing by one underlined morpheme.};
+\end{tikzpicture}
 }
 
 
 %====================================================================
-% ROW 3 -- Method
+% ROW 3 -- Method (visual 3-step pipeline)
 %====================================================================
-\headerbox{Method}{name=method,column=0,below=phen,span=2}{
-\begin{minipage}[t]{0.31\linewidth}
-\textcolor{seeblau100}{\textbf{1. Source corpora}}\\
-\textbf{Urdu Treebank} (CLE, 7{,}854 sentences) -- syntactic patterns,
-e.g.\ \texttt{(VC (VBF) (AUXP))} for aspect.\\[3pt]
-\textbf{In-house Urdu corpus} -- regex extraction (e.g.\
-\foreignlanguage{arabic}{جو \dots وہ \dots}) for sparse paradigms.
-\end{minipage}\hfill
-\begin{minipage}[t]{0.31\linewidth}
-\textcolor{seeblau100}{\textbf{2. Pair generation}}\\
-Rule-based perturbation of one minimal feature
-(e.g.\ swap aspectual auxiliary, drop \textit{ko}, change verb gender)
-to derive the \textbf{ungrammatical} counterpart.\\[3pt]
-Manual review + typo cleaning per paradigm.
-\end{minipage}\hfill
-\begin{minipage}[t]{0.31\linewidth}
-\textcolor{seeblau100}{\textbf{3. Human validation (PCIbex)}}\\
-\textbf{17 native Urdu speakers}, two rounds.\\
-Round 1: 20-pair training set.\\
-Round 2: $\sim$190 pairs/annotator, 10 per paradigm, randomised,
-forced-choice acceptability.\\
-Validated subset: \textbf{1{,}077 pairs}.
-\end{minipage}
+\headerbox{Method -- end-to-end pipeline}{name=method,column=0,below=phen,span=2}{
+\centering
+\begin{tikzpicture}[
+   node distance=10pt and 14pt,
+   stepbox/.style={draw=seeblau100,line width=1.2pt,fill=seeblau20!40,
+                   rounded corners=6pt,inner sep=8pt,
+                   text width=0.27\linewidth,align=left,font=\footnotesize},
+   steparrow/.style={-Stealth,line width=2pt,draw=seeblau100}
+]
+  \node[stepbox] (s1) {%
+    \textcolor{seeblau100}{\textbf{1. Source corpora}}\\[3pt]
+    \textbf{Urdu Treebank} (CLE, 7{,}854 sentences) -- extract via syntactic
+    patterns, e.g.\ \texttt{(VC (VBF) (AUXP))}.\\[3pt]
+    \textbf{In-house corpus} -- regex extraction
+    (\foreignlanguage{arabic}{جو\dots وہ\dots}) for sparse paradigms.};
+  \node[stepbox,right=of s1] (s2) {%
+    \textcolor{seeblau100}{\textbf{2. Pair generation}}\\[3pt]
+    Rule-based perturbation of \emph{one} minimal feature
+    (swap aspect aux., drop \textit{ko}, change verb gender, \dots) to derive
+    the \textbf{ungrammatical} counterpart.\\[3pt]
+    Manual review + typo cleaning per paradigm.};
+  \node[stepbox,right=of s2] (s3) {%
+    \textcolor{seeblau100}{\textbf{3. Human validation (PCIbex)}}\\[3pt]
+    \textbf{17 native Urdu speakers}, two rounds.\\
+    R1: 20-pair training set.\\
+    R2: $\sim$190 pairs/annotator, 10/paradigm, randomised, forced-choice.\\[3pt]
+    Validated subset: \textbf{1{,}077 pairs}.};
+  \draw[steparrow] (s1) -- (s2);
+  \draw[steparrow] (s2) -- (s3);
+\end{tikzpicture}
 }
 
 
@@ -206,61 +260,94 @@ GPT-4o evaluated via two-choice prompting (\textit{explain-then-process}).
 \headerbox{Headline Results -- Avg.\ Accuracy across 10 Phenomena}%
 {name=results,column=1,below=method}{
 \centering
-\renewcommand{\arraystretch}{1.25}
-\begin{tabular}{lr}
-\toprule
-\textcolor{seeblau100}{\textbf{Model}} & \textcolor{seeblau100}{\textbf{Avg.\ (\%)}} \\
-\midrule
-\textbf{GPT-4o (Grammar-Prompt)} & \textbf{97.40} \\
-GPT-4o (Base)                    & 95.69 \\
-GPT-4o (GP + CoT)                & 94.25 \\
-\textbf{LLaMA-3-70B}             & \textbf{94.73} \\
-Alif-1.0-8B-Instruct (Urdu)      & 93.25 \\
-Gemma-3-27B-pt                   & 92.42 \\
-Gemma-3-12B-pt                   & 92.68 \\
-DeepSeek-R1-Distill-70B          & 92.46 \\
-LLaMA-3-8B                       & 90.71 \\
-Granite-3.3-8B-base              & 87.44 \\
-mBERT                            & 78.77 \\
-mT5-large                        & 63.36 \\
-mT5-small                        & 50.69 \\
-\midrule
-\rowcolor{seeblau20}
-\textbf{Human (native speakers)} & \textbf{96.28} \\
-\bottomrule
-\end{tabular}\\[4pt]
-{\footnotesize\textit{GPT-4o + Grammar-Prompting is the only model to exceed
-human average. LLaMA-3-70B and Alif-8B are close to human performance.}}
+\begin{tikzpicture}
+\begin{axis}[
+   xbar,
+   width=0.95\linewidth,height=12cm,
+   bar width=8pt,
+   enlarge y limits=0.04,
+   xmin=45,xmax=100,
+   xlabel={\footnotesize Average accuracy (\%)},
+   xtick={50,60,70,80,90,100},
+   ytick=data,
+   symbolic y coords={mT5-small,mT5-large,mBERT,Granite-8B,LLaMA-3-8B,
+        DeepSeek-70B,Gemma-3-12B,Gemma-3-27B,Alif-8B,GPT-4o (CoT),
+        LLaMA-3-70B,GPT-4o (Base),Human,GPT-4o (GP)},
+   nodes near coords,nodes near coords align={horizontal},
+   nodes near coords style={font=\scriptsize},
+   tick label style={font=\scriptsize},
+   label style={font=\footnotesize},
+]
+\addplot[fill=seeblau100,draw=seeblau100] coordinates {
+   (50.69,mT5-small) (63.36,mT5-large) (78.77,mBERT)
+   (87.44,Granite-8B) (90.71,LLaMA-3-8B) (92.46,DeepSeek-70B)
+   (92.68,Gemma-3-12B) (92.42,Gemma-3-27B) (93.25,Alif-8B)
+   (94.25,GPT-4o (CoT)) (94.73,LLaMA-3-70B) (95.69,GPT-4o (Base))
+   (97.40,GPT-4o (GP))};
+\addplot[fill=seeblau35,draw=seeblau100] coordinates {
+   (96.28,Human)};
+\draw[red,dashed,thick] (axis cs:96.28,mT5-small)
+   -- (axis cs:96.28,GPT-4o (GP)) node[pos=0.9,above,
+   font=\scriptsize,red] {Human baseline};
+\end{axis}
+\end{tikzpicture}\\[-4pt]
+{\footnotesize\textit{Only \textbf{GPT-4o + Grammar-Prompt} exceeds the
+human baseline. LLaMA-3-70B \& Urdu-tuned Alif-8B are within reach.}}
 }
 
 
 %====================================================================
-% ROW 5 -- Findings + take-aways
+% ROW 5 -- Findings: model size chart + 2 text findings
 %====================================================================
 \headerbox{Key Findings}{name=findings,column=0,below=eval,span=2}{
-\begin{minipage}[t]{0.31\linewidth}
-\textcolor{seeblau100}{\textbf{Long-distance agreement is hard}}\\
-Even LLaMA-3-70B fails when subject and verb are separated by intervening
-clauses, e.g.\\
-\foreignlanguage{arabic}{استانی سبق پڑھا کر \dots سوتی}\\
-The longer the dependency, the more LMs default to local cues.
+\begin{minipage}[t]{0.36\linewidth}
+\centering
+\textcolor{seeblau100}{\textbf{Size $\neq$ better}}\\[4pt]
+\begin{tikzpicture}
+\begin{axis}[
+   ybar,
+   width=\linewidth,height=5.5cm,
+   bar width=14pt,
+   ymin=80,ymax=100,
+   ylabel={\footnotesize Acc.\ (\%)},
+   symbolic x coords={1B,4B,12B,27B},
+   xtick=data,
+   nodes near coords,
+   nodes near coords style={font=\scriptsize},
+   tick label style={font=\scriptsize},
+   label style={font=\footnotesize},
+   ymajorgrids=true,grid style=dashed,
+]
+\addplot[fill=seeblau100,draw=seeblau100] coordinates {
+   (1B,86.74) (4B,88.11) (12B,92.68) (27B,92.42)};
+\draw[red,dashed,thick] (axis cs:1B,96.28) -- (axis cs:27B,96.28)
+   node[pos=0.5,above,font=\scriptsize,red] {Human};
+\end{axis}
+\end{tikzpicture}\\[-4pt]
+{\footnotesize Gemma-3-PT 1B$\to$27B: significant gains
+(Wilcoxon $p<0.05$). But 12B $\approx$ 27B $\approx$ LLaMA-70B
+$\approx$ Alif-8B (no sig.\ diff.\ among top models).}
 \end{minipage}\hfill
-\begin{minipage}[t]{0.31\linewidth}
-\textcolor{seeblau100}{\textbf{Size $\neq$ better}}\\
-Within Gemma-3, 1B$\to$27B yields significant gains
-(Wilcoxon, $p<0.05$). \textbf{But} Gemma-3-27B-pt rivals LLaMA-3-70B /
-DeepSeek-70B -- \emph{no} significant difference among top models.\\
-\textbf{Pretrained $>$ Instruction-tuned} on Gemma-3 (1B/4B/12B):
-instruction tuning can \emph{hurt} grammatical sensitivity.
+\begin{minipage}[t]{0.30\linewidth}
+\textcolor{seeblau100}{\textbf{Long-distance agreement is hard}}\\[3pt]
+Even LLaMA-3-70B fails when subject \& verb are separated by intervening
+clauses:\\[2pt]
+\foreignlanguage{arabic}{استانی سبق پڑھا کر \dots \underline{سوتی}}\\[2pt]
+{\footnotesize The longer the dependency, the more LMs default to local
+cues.}\\[6pt]
+\textcolor{seeblau100}{\textbf{Pretrained $>$ Instruction-tuned}}\\[3pt]
+On Gemma-3 (1B/4B/12B): instruction tuning can \emph{hurt} grammatical
+sensitivity in 8/10 phenomena.
 \end{minipage}\hfill
-\begin{minipage}[t]{0.31\linewidth}
+\begin{minipage}[t]{0.30\linewidth}
 \textcolor{seeblau100}{\textbf{Phenomenon-specific}}
 \begin{itemize}
-\item Aspect, Dative: near-perfect (local cues).
-\item Obliqueness: hard for adjectives \& masc.\ sg.\ nouns.
-\item Subj--Verb gender: hardest, max 92.5\%.
-\item Honorific: requires register knowledge.
-\item UrBLiMP-SVA is \emph{harder} than MultiBLiMP-SVA.
+\item \textbf{Aspect, Dative:} near-perfect (local cues).
+\item \textbf{Obliqueness:} hard for adjectives \& masc.\ sg.\ nouns
+      (subtle morphology).
+\item \textbf{Subj--Verb gender:} hardest, max 92.5\%.
+\item \textbf{Honorific:} requires register knowledge.
+\item \textbf{UrBLiMP-SVA} is harder than MultiBLiMP-SVA for every model.
 \end{itemize}
 \end{minipage}
 }
@@ -276,9 +363,9 @@ instruction tuning can \emph{hurt} grammatical sensitivity.
 \item Multilingual LLMs handle \textbf{local agreement} well, but
       struggle with \textbf{long-distance dependencies} and
       \textbf{morpho-syntactic case}.
-\item \textbf{Grammar prompting} brings GPT-4o above human average.
+\item \textbf{Grammar prompting} brings GPT-4o above the human average.
 \item \textbf{Continual pretraining on Urdu} (Alif-8B) beats its
-      LLaMA-3-8B base.
+      LLaMA-3-8B base on 9/10 phenomena.
 \item Resources: \texttt{github.com/farahadeeba/UrBLiMP} -- open-source.
 \end{itemize}
 \vfill
