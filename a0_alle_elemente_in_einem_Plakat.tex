@@ -1,0 +1,881 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%                                                     %
+% Ausfuehrliches Beispiel eines DinA0 Plakats im      %
+% Corporate Design der Universität Konstanz           %
+% Stand: 30.11.2020 - Michael Brendle (Version 0.6)   %
+%                                                     %
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+
+% Dies ist eine Beispiel für das Erstellen eines 
+% DinA0 Plakats mit Hilfe der Systemschrift Arial
+% (XeLaTeX) im Corporate Design der 
+% Universität Konstanz.
+%
+% Bitte beachten Sie die folgenden zwei Hinweise: 
+%
+% 1. Dieses Dokument muss mit XeLaTeX kompiliert werden.
+%
+% 2. Für den Fall, dass ihr System die Arial Schrift noch 
+%    nicht installiert hat (meist nur für Linux Systeme 
+%    relevant), finden Sie im Unterordner /fonts die 
+%    TrueType/OpenType Versionen zum installieren.
+%
+% Für weitere Informationen sei auch zur README.txt in 
+% diesem Ordner verwiesen.
+%
+% Sollten Sie Probleme beim Kompilieren haben, können
+% Sie dieses Dokument auch online, in Overleaf, unter
+% der URL
+%
+%    https://www.overleaf.com/1493737695drckrxxzsfgn
+%
+% einsehen, bearbeiten und kompilieren. 
+%
+% Schauen Sie, dass Ihre Tex-Distribution, sowie alle Pakete 
+% auf dem aktuellsten Stand sind, um Probleme zu vermeiden.
+%
+% Bei Fragen, Hinweisen und Anregungen können Sie mich unter
+%
+%     michael.brendle@uni-konstanz.de 
+%
+% kontaktieren.
+
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Dokumentenklasse             %
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+% Als Dokumentenklasse wird article verwendet.
+%
+% Zudem muss die Option rgb eingeschalten werden, damit die definierten 
+% Farben des HSB Farbraums in den RGB Farbraum umgewandelt werden, da 
+% einige Pakete keinen HSB Farbraum unterstuetzen.
+
+\documentclass[rgb]{article}
+
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Paket Theme Konstanz         %
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+% Alle verwendeten Makros und Umgebeungen, sowie weitere angepasste Elemente befinden
+% sich in der Datei themeKonstanz.sty
+
+
+% Importiere das neue Paket "themeKonstanz"
+
+\usepackage{themeKonstanz}
+
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Papierformat                 %
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+% Anpassung des Papierformates:
+% Zur Auswahl stehen:
+%
+%   Schlüssel  Beschreibung      Höhe      Breite
+%   -----------------------------------------------
+%   a0         DinA0 Hochformat  118.9 cm  84.1  cm
+%   a0quer     DinA0 Querformat  84.1  cm  118.9 cm
+%   a1         DinA1 Hochformat  84.1  cm  59.4  cm
+%   a1quer     DinA1 Querformat  59.4  cm  84.1  cm
+%   a2         DinA2 Hochformat  59.4  cm  42.0  cm
+%   a2quer     DinA2 Querformat  42.0  cm  59.4  cm
+%   a3         DinA3 Hochformat  42.0  cm  29.7  cm
+%   a3quer     DinA3 Querformat  29.7  cm  42.0  cm
+%   a4         DinA4 Hochformat  29.7  cm  21.0  cm
+%   a4quer     DinA4 Querformat  21.0  cm  29.7  cm
+%   a5         DinA5 Hochformat  21.0  cm  14.8  cm
+%   a5quer     DinA5 Querformat  14.8  cm  21.0  cm
+%   a6         DinA6 Hochformat  14.8  cm  10.5  cm
+%   a6quer     DinA6 Querformat  10.5  cm  14.8  cm
+%   langquer   Din LANG Quer     10.5  cm  21.0  cm
+%   langhoch   Din LANG Hoch     21.0  cm  10.5  cm
+%
+% Falls keiner der unterstützten Schlüssel übergeben wird,
+% ist DinA3 Hochformat der Standard.
+
+
+% Wähle hier DinA0 Hochformat mit dem Schlüssel aß aus.
+
+\format{a0}
+
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Beginn des Plakats           %
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\begin{document}
+
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Initialisierung der Schrift  %
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+% Hier wird nun die Schriftart Arial verwendet.
+% Diese zwei Befehle müssen auf jeden Fall im Tex Dokument 
+% nach begin{document} auftauchen.
+
+\setmainfont{Arial}
+\setsansfont{Arial}
+
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Unilogo                      %
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+% Mit dem Befehl
+%
+%     \unilogo
+%
+% wird das Logo der Universität Konstanz an die richtige Stelle 
+% auf dem Plakat platziert. Durch die vorherige Auswahl des Papierformates
+% werden alle notwendigen Kriterien (Platz und Logohöhe) eingehalten.
+%
+% Damit es richtig eingebunden wird, sollte sich das Logo der Universität 
+% Konstanz an folgender Stelle befinden:
+%
+%     graphics/UniKonstanz_Logo_Optimum.pdf
+%
+% Sollte das Logo der Universität Konstanz an einem anderen Pfad auf Ihrem
+% Rechner liegen, können Sie mit einem optionalen Argument diesen Pfad
+% anpassen.
+%
+%     \unilogo[../graphics/UniKonstanz_Logo_Optimum.pdf]
+
+
+% Füge das Logo der Universität Konstanz mittels des Standardpfades ein.
+
+\unilogo
+
+%%%%%%%%%%%%%%%%%%%%%%
+% Schriftgröße       %
+%%%%%%%%%%%%%%%%%%%%%%
+
+% Da innerhalb eines Plakates es meistens mehrere verschiedene Schriftgrößen
+% gibt, steht hier das Makro
+%
+%     \selectfontsize
+%
+% zur Verfügung.
+%
+% Dieses Makro besitzt ein unbedingt notwendiges Argument und ein optionales
+% Feld, indem Key-Value Pairs übergeben werden können.
+%
+%     \selectfontsize[<Key Value Pairs>]{<Schriftgröße>}
+%
+% Das Argument hat dabei folgende Bedeutung:
+% 
+%   1. Argument:         Hier wird die neue Schriftgröße angegeben, die verwendet werden
+%                        soll.
+% Die weiteren Formatierungsoptionen werden alle innerhalb des optionalen Argumentes mittels
+% Key-Value Pairs bestimmt.
+%
+% Dabei stehen folgende Optionen zur Verfügung:
+%
+%     baselineskip    Hier wird der baselineskip angegeben, welcher verwendet werden soll
+%                     Mögliche Werte:
+%                         0      Ist dieser 0, dann wird der baselinefaktor verwendet  
+%                         sonst
+%                    Standardwert: 0
+%
+%     baselinefaktor Hier wird der Faktor angegeben, der verwendet wird, um den neuen
+%                    baselineskip zu berechnen.
+%                    Dieser wird nur benutzt, falls der baselineskip 0 beträgt.
+%                    
+%                        baselineskip = baselinefaktor * #1
+%
+%                    Standardwert: 12/10
+%
+%                    Da hier keine Fließkommazahl in der Dezimalschreibweise angegeben werden
+%                    kann, müssen diese als Brüche repräsentiert werden, wie z.b. 12/10 anstatt
+%                    1.2.
+
+
+% Wähle die Schriftgröße 150 mit dem Standradmäßigen Baselinefaktor 1.2 aus.
+
+\selectfontsize{150pt}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Textfeld                     %
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+% Damit ein problemloses Anordnen der Elemente auf dem Plakat möglich ist,
+% steht ein neue Umgebeung mit dem Namen
+%
+%     textfeld
+%
+% zur Verfügung.
+%
+% Diese Umgebung besteht aus zwei unbedingt notwendigen Argumenten und einem
+% optionalen Argument.
+%
+%     \begin{textfeld}[optionales Argument]{1. Argument}{2. Argument}
+%          ...
+%     \end{textfeld}
+%
+% Innerhalb der Umgebung kann dann der Inhalt des Textfeldes hinterlegt werden.
+%
+% Die Argumente haben dabei folgende Bedeutung:
+% 
+%   Optionales Argument: Hier wird die Breite des Textfeldes festgelegt.
+%                        Wird dies Weggelassen wird einfach die Papierbreite
+%                        als Breite des Textfeldes angegeben. Dies kann nützlich sein
+%                        wenn man nicht weiß, wie breit der Inhalt werden kann.
+%                        Dringend verwenden sollte man dieses Argument, wenn man
+%                        beispielsweise Textumbrüche erzeugen will anhand der vorgegebenen
+%                        Breite.
+%
+%   1. Argument:         Hier wird die x-Koordinate der linken oberen Ecke des Textfeldes
+%                        angegeben.
+%
+%   2. Argument:         Hier wird die y-Koordinate der linken oberen Ecke des Textfeldes
+%                        angegeben.
+%
+% Für die beiden Argumente, ist noch wichtig zu wissen, wie die Koordinaten verstanden
+% werden sollten:
+%
+%                x-Achse
+%
+%                0                         \paperwidth
+%           y  0 -------------------------------------
+%           -    |                                   |
+%           A    |                                   |
+%           c    |                                   |
+%           h    |                                   |
+%           s    |                                   |
+%           e    |                                   |
+%                |                                   |
+%                |               ...                 |
+%                |                                   |
+%                |                                   |
+%                |                                   |
+%                |                                   |
+%                |                                   |
+%                |                                   |
+%                |                                   |
+%                |                                   |
+%   \paperheight -------------------------------------
+%
+%   - Dabei handelt es sich überall um positive Werte und um absolute Koordinaten.
+%
+%   - Zudem muss immer die jeweilige Einheit an den Wert hinzuegfügt werden, damit der
+%     Wert richtig interpretiert werden kann. Möchte man vorher beispielsweise eine Skizze
+%     machen, dann empfiehlt es sich hier cm als Einheit zu verwenden.
+%
+%   - Mittles \paperwidth und \paperheight können auch Koordinaten angegeben werden,
+%     die relativ zum Papierformat sind. Durch das calc Paket ist es zudem möglich
+%     Rechnungen innerhalb der Argumente vorzunehmen.
+%     
+%     Möchte man beispielsweise fünf Zentimeter sowohl vom linken als auch unteren Ende
+%     ein Textfeld beginnen, so würde der Befehl wie folgt aussehen:
+%
+%         \begin{textfeld}{\paperwidth - 5cm}{\paperheight - 5cm}
+%             ...
+%         \end{textfeld}
+%
+%
+% Zudem sollte man noch wissen, dass alle neueren Textfelder, also jene die weiter unten
+% stehen, die älteren überdecken. Dadurch sollte das Plakat von hinten nach vorne aufgebaut
+% werden.
+
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%
+% CD Element: Markieren %
+%%%%%%%%%%%%%%%%%%%%%%%%%
+
+% Um einen Text mit Hilfe des Markieren Elements des Corporate Design hervorzuheben,
+% steht das Makro
+%
+%     \markieren
+%
+% zur Verfügung.
+%
+% Dieses Makro besitzt vier unbedingt notwendige Argumente und ein optionales
+% Feld, indem weitere EIgenschaften festgelegt werden könnnen..
+%
+%     \markieren[Optionen per Key-Value Pair]{<Zeile 1>}{<Zeile 2>}{<Zeile 3>}{<Zeile 4>}
+%
+% Die Argumente haben dabei folgende Bedeutung:
+%
+%   1. - 4. Argument:    Hier werden nun die eigentlichen Zeilen übergeben.
+%
+%                        Wichtig dabei ist es, dass die Aufteilung der Zeilen manuell erfolgen muss durch
+%                        die Argumente, da nur somit sichergestellt werden kann, dass bspw. Treppeneffekte
+%                        nicht auftreten und somit der Benutzer alle Freiheiten bei der Aufteilung besitzt.
+%
+%                        Sollten nicht alle Zeilen verwendet werden, dann müssen die hinteren Brackets
+%                        leer gelassen werden, wie beispielsweise bei der Headline
+%
+% Die wichtigen Formatierungsoptionen werden alle innerhalb des optionalen Argumentes mittels
+% Key-Value Pairs bestimmt.
+%
+% Dabei stehen folgende Optionen zur Verfügung:
+%
+%   align                Hier kann angegeben werden, ob das komplette Objekt
+%                        links- oder rechtsbündig angeordent werden soll.
+%                      
+%                        Der Standardwert ist "left" und somit linksbündig.
+%
+%                        Für eine rechtsbündige Anordnung muss hier der Wert "right" hinterlegt werden.
+%
+%   vertical             Hier wird angegeben, ob der Inhalt der Zeilen zentriert werden soll oder
+%                        überall an der gleichen Baseline ausgerichtet werden soll.
+%                       
+%                        Dies kann mittels der Wörter "center" und "base" eingestellt werden.
+%                        Dabei ist "center" als Standardwert festgelegt.
+%
+%                        Der Unterschied besteht darin, dass bei Zeilen die Buchstaben mit einer Tiefe
+%                        enthalten, wie g, p oder q, anders zentriert werden als welche ohne Buchstaben
+%                        mit einer Tiefe.
+%
+%                        Da dies ein wenig Geschmackssache ist, werden hier beide Varianten zur Verfügung
+%                        gestellt, wobei "center" primär verwendet werden soll, und "base" eher wenn
+%                        Buchstaben mit einer Tiefe in den Zeilen enthalten sind.
+
+
+% Erzeuge nun ein Textfeld an der Koordinate (6 cm, 15 cm) mit einem Markieren Element und dem Text
+%
+%     Ich bin
+%     eine
+%     Headline.
+%
+% welches links ausgerichtet ist, und in jeder Zeile zentriert.
+
+\begin{textfeld}{6cm}{15cm}%
+\markieren{\textbf{Ich bin}}{\textbf{eine}}{\textbf{Headline.}}{}%
+\end{textfeld}%
+
+
+
+%%%%%%%%%%%%%%%%%%%%%%
+% CD Element: Block %
+%%%%%%%%%%%%%%%%%%%%%%
+
+% Mit dem Makro
+%
+%     \cdblock[Optionen per Key-Value Pair]{<Headline>}{<Spalte 1>}{<Spalte 2>}{<Spalte 3>}{<Spalte 4>}{<Spalte 5>}{<Spalte 6>}{<Spalte 7>}{<Spalte 8>}
+%
+% können Block-Elemente für z.B. wisschenschaftliche Inhalte erstellt werden.
+%
+% Dieses Makro besitzt 9 erforderliche Elemente, die bei jedem Aufruf angegeben werden müssen. Dabei 
+% ist es natürlich mögliche Argumente leer zu lassen, falls man diese nicht benötigt. Dies hat jedoch
+% keinen Einfluss auf die Anzahl an Spalten. Diese müssen separat im Optionenargument angegeben werden
+% mittels des Schlüssels columnnum (siehe weiter unten).
+%
+% Die Argumente haben dabei folgende Bedeutung:
+%
+%   1. Argument: Inhalt der Headline
+%   2. Argument: Inhalt der 1. Spalte
+%   3. Argument: Inhalt der 2. Spalte
+%   4. Argument: Inhalt der 3. Spalte
+%   5. Argument: Inhalt der 4. Spalte
+%   6. Argument: Inhalt der 5. Spalte
+%   7. Argument: Inhalt der 6. Spalte
+%   8. Argument: Inhalt der 7. Spalte
+%   9. Argument: Inhalt der 8. Spalte
+%
+%
+% Die wichtigen Formatierungsoptionen werden diesmal alle innerhalb des optionalen Argumentes mittels
+% Key-Value Pairs bestimmt.
+%
+% Dabei stehen folgende Optionen zur Verfügung:
+%
+%     thick          Hier wird die Dicke der Linie bestimmt.
+%                    Die Pfeile werden generell mit der doppelten Dicke gezeichnet!
+%                    Standardwert: \boxlinewidth
+%
+%     width          Hier wird die Breite des Blocks angegeben
+%                    Standardwert: \paperwidth
+%
+%     columnnum      Hier werden die Anzahl an Spalten definiert
+%                    Standardwert: 4
+%
+%     headlinesep    Hier wird der Abstand zwischen der Headline und den Spalten angegeben
+%                    Standardwert: Aktuelle Schriftgröße
+%
+%     columnspace    Hier wird der Abstand zwischen den Spalten angegeben
+%                    Standardwert: Doppelte Schriftgröße
+%
+%     block          Hier kann angegeben werden, ob man einen Rahmen um diesen Block haben möchte
+%                    Mögliche Werte: true, false
+%                    Standardwert: false
+%
+%     inner          Hier kann angegeben werden, ob zwischen den Spalten Trennlinien haben möchte
+%                    Mögliche Werte:
+%                        false    keine Trennlinien
+%                        short    Trennlinien, die so lange sind, wie der längste Nachbar (entweder der
+%                                 linke oder rechte Nachbar
+%                        long     Trennlinien, die bis nach ganz unten gehen. Sie sind also so lang
+%                                 wie die längste Spalte
+%                    Standardwert: false
+%
+%     inner1,        Hier kann für jeden Zwischenraum der Spalte exakt angegeben werden, ob Trennlinien
+%     inner2,        existieren sollen und falls ja, wie lang sie sein sollen. Diese Werte werden jedoch
+%     inner3,        nur berücksichtigt, wenn inner=false ist. Ansonsten ist inner stärker.
+%     inner4,        Mögliche Werte:
+%     inner5,           false    keine Trennlinien
+%     inner6,           short    Trennlinien, die so lange sind, wie der längste Nachbar (entweder der
+%     inner7,                    linke oder rechte Nachbar
+%                       long     Trennlinien, die bis nach ganz unten gehen. Sie sind also so lang
+%                                wie die längste Spalte
+%                    Standardwert: false
+%
+%     outerleft,     Hier kann angegeben werden, ob links (rechts) der ersten Spalte eine Trennlinie existieren soll.
+%     outerright     Mögliche Werte
+%                        false    keine Trennlinien
+%                        short    Trennlinien, die so lange sind, wie der direkte Nachbar (bei outerleft die 1. Spalte
+%                                 und bei outerright die letzte Spalte
+%                        long     Trennlinien, die bis nach ganz unten gehen. Sie sind also so lang
+%                                 wie die längste Spalte
+%                        verylong Trennlinie geht von oben nach unten, sowie ein halber columnspace nach innen.
+%                    Standardwert: false
+%
+%     outertop,      Hier kann angegeben werden, ob oberhalb (unterhalb) des Blocks eine Trennlinie, oder ein Pfeil existieren soll.
+%     outerbottom    Mögliche Werte
+%                        false    keine Trennlinien
+%                        long     Trennlinien, die von links nach rechts geht
+%                        verylong Trennlinie, die von links nach rechts geht, sowie ein halber columnspace nach oben (unten).
+%                        arrow    Pfeil, der aus der Trenlinie verylong besteht und in der Mitte einen Pfeil nach oben (unten)
+%                                 besitzt.
+%                    Standardwert: false
+%
+%     arrowtop1left, Hier kann angegeben werden, ob zwei Spalten oberhalb des Blocks mittels eines Doppelpfeils verbunden werden
+%     arrowtop1right sollen. Da es maximal 8 Spalten sind, können auch nur maximal 4 Paare bestimmt werden.
+%     arrowtop2left  Ein Paar besteht somit aus einer linken und einer rechten Spalte.
+%     arrowtop2right Mögliche Werte:
+%     arrowtop3left      0   Keine Auswahl
+%     arrowtop3right     1-8 Auswahl einer Spalte von 1 bis 8
+%     arrowtop4left  Standardwert: 0
+%     arrowtop4right Sollte der linke Wert nicht kleiner als der rechte Wert sein, so werden keine Pfeile gezeichnet. Das gleiche
+%                    gilt für Werte, die außerhalb des Bereichs liegen.
+% 
+%
+% Wichtig ist noch zu wissen, wie die Breite letztendlich berechnet wird:
+% Da es auch links und rechts der Spalten Trennlinien oder Pfeile geben kann, ist links der 1. und rechts der
+% letzten Spalte ebenfalls ein columnspace vorgesehen.
+% Somit wird die Spaltenbreite wie folgt berechnet
+%
+%     blockcolumnwidth = (width - (columnspace * (columnnum + 1))) / columnnum
+%
+
+
+\selectfontsize{26pt}%
+
+% Erzeuge ein Textfeld an der Koordinate (20.275 cm, 55 cm).
+
+\begin{textfeld}{20.275cm}{40cm}%
+%
+% Hier entsteht ein Block, welcher aus zwei Spalten besteht.
+% Zudem besitzt dieser eine Breite von 43.55 cm, einem Spaltenabstand von 3cm, sowie einer
+% unteren Klammer mit einem Pfeil nach unten und einer oberen Klammer ohne Pfeil
+%
+\cdblock[width=43.55cm, columnnum=2, columnspace=3cm, outertop=verylong, outerbottom=arrow, inner=long]{}{\textcolor{seeblau100}{\textbf{Qualitätsmanagement}}\\[\baselineskip]Das Qualitätsmanagement umfasst die Planung, Umsetzung, Evaluation, Kontrolle und Weiterentwicklung von Vorhaben bzw. Prozessen mit dem Ziel, die \textbf{Steuerungsfähigkeit der Universität durch Planung und Monitoring zu verbessern} und das Qualitätsbewusstsein in den genannten Bereichen zu entwickeln. Im Rahmen von Evaluationen werden Stärken/Schwächen-Analysen durchgeführt und auf Basis der Ergebnisse Veränderungsprozesse angestoßen.}{\textcolor{seeblau100}{\textbf{Fundraising}}\\[\baselineskip]Durch die neuen Strategien im Fundraising konnten in verschiedenen Bereichen beträchliche Förderungen eingeworben werden. Dazu gehören unter anderem\begin{itemize}\item die Unterstützung der Konstanzer Photovoltaik-Forschung in Millionenhöhe, \item die Einwerbung von drei Millionen Euro für den „Hector-Personalfonds der Universität Konstanz“, mit der Ausstattungszusagen bei Berufungs- und Bleibeverhandlungen und Gehaltsanreize für außerordentliche Leistungen gegeben sowie Tenure Track-Positionen eingerichtet werden können, \item aber auch Projekte wie der neu eingerichtete „Konstanzer Stipendienfonds“, über den Studierende durch Patenschaften und Einzelspenden direkt unterstützt werden können.\end{itemize}}{}{}{}{}{}{}\\%
+%
+% Hier entsteht ein Block, welcher aus zwei Spalten besteht.
+% Zudem besitzt dieser eine Breite von 43.55 cm, einem Spaltenabstand von 3cm, sowie
+% einem Rahmen.
+%
+\cdblock[width=43.55cm, columnnum=2, columnspace=3cm, block=true]{\selectfontsize{34pt}\underline{\textbf{Dieser Block hat sogar eine sehr laaaaaange Überschrift}}}{Die als Reformuniversität gegründete Universität Konstanz hat durch Spitzenplätze in vielen Rankings und bei der Einwerbung von Drittmitteln eine herausragende Qualität und Exzellenz in Forschung und Lehre nachgewiesen. Der Themenschwerpunkt des Konstanzer Zukunftskonzeptes widmet sich den forschungsförderlichen Rahmenbedingungen für Spitzenforschung zugunsten eines Ausbaus der Konstanzer,,Kultur der Kreativität''. Er befasst sich mit der grundlegenden Stärkung der Forschungsfelder der Universität und der dafür benötigten Instrumente.}{Die dritte Förderlinie der Exzellenzinitiative, der Exzellenzcluster und die Graduiertenschule ergänzen sich durch konzeptionelle Verbindung, um die gesamte Universität zu einem Europäischen Zentrum für erstklassige NachwuchswissenschaftlerInnen zu entwickeln. Die Grundlage hierfür bilden ihre wissenschaftsfördernden, flexiblen Strukturen und der kreative, partnerschaftliche Geist, der von allen Universitätsmitgliedern gelebt wird. Die langfristige Planung des ,,Modells Konstanz'' als Kreativitätskultur hat gezeigt, dass an individuelle Bedürfnisse angepasste Arbeitsbedingungen unabdingbar sind, um schöpferische Spitzenforschung zu fördern.}{}{}{}{}{}{}\\[3cm]%
+%
+% Hier entsteht ein Block, welcher aus vier Spalten besteht.
+% Zudem besitzt dieser eine Breite von 43.55 cm, einem Spaltenabstand von 3cm, sowie
+% einer linken und rechten Klammer. Innerhalb sind alle Trennlinien nach der längsten Trennlinie
+% ausgerichtet.
+%
+\cdblock[width=43.55cm, columnnum=4, columnspace=3cm, outerleft=verylong, outerright=verylong, inner=long]{}{\textcolor{seeblau100}{\textbf{Spalte 1}}\\[\baselineskip]Dies ist die erste Spalte und hier kann eigentlich so alles mögliche stehen, was man sich so vorstellen kann. Einfach alles.}{\textcolor{seeblau100}{\textbf{Spalte 2}}\\[\baselineskip]Dies ist die zweite Spalte und hier kann auch wieder eine ganze Menge stehen}{\textcolor{seeblau100}{\textbf{Spalte 3}}\\[\baselineskip]Auch hier kann das ein oder andere wichtige stehen, oder sogar sehr wichtiges}{\textcolor{seeblau100}{\textbf{Spalte 4}}\\[\baselineskip]Und auch in der vierten Spalte findet man sicherlich einiges}{}{}{}{}%
+\end{textfeld}%
+
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% CD Element: Linie (mit optionalen Pfeilen) %
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+% Mit dem Makro
+%
+%     \cdline[Optionen per Key-Value Pair]{<Länge der Linie>}
+%
+% kann eine Linie mit einer bestimmten Länge erstellt werden.
+%
+% Dieses Makro besitzt 1 erforderliches Element, welches bei jedem Aufruf mit angegeben
+% werden muss.
+%
+% Das Argument hat dabei folgende Bedeutung.
+%
+%   1. Argument: Länge der erzeugten Linie
+%
+%
+% Die wichtigen Formatierungsoptionen werden alle innerhalb des optionalen Argumentes mittels
+% Key-Value Pairs bestimmt.
+%
+% Dabei stehen folgende Optionen zur Verfügung:
+%
+%     thick          Hier wird die Dicke der Linie bestimmt
+%                    Standardwert: \boxlinewidth
+%
+%     mode           Hier wird angegeben, ob die Linie horizontal oder vertikal ausgerichtet werden soll
+%                    Mögliche Werte
+%                        horizontal
+%                        vertical
+%                    Standardwert: horizontal
+%
+%     color          Hier wird die Farbe der Linie angegeben
+%                    Es sollten nur die folgenden Farben benutzt werden:
+%                        seeblau100
+%                        seeblau65
+%                        seeblau35
+%                        seeblau20
+%                        black
+%                        schwarz60
+%                        schwarz40
+%                        schwarz20
+%                        schwarz10
+%                    Standardwert: seeblau100
+%
+%     arrowleft      Hier wird angegeben, die Linie am linken (vertical: oberen) Ende mit einem Pfeil enden soll
+%                    Mögliche Werte:
+%                        true
+%                        false
+%                    Standardwert: false
+%
+%     arrowright     Hier wird angegeben, die Linie am rechten (vertical: unteren) Ende mit einem Pfeil enden soll
+%                    Mögliche Werte:
+%                        true
+%                        false
+%                    Standardwert: false
+
+
+% Erstelle eine Textfeld an der Koordinate (6 cm, 40 cm)
+
+\begin{textfeld}{6cm}{40cm}%
+%
+% Erstelle eine einfache Linie mit der Farbe seeblau20 und einer Länge von 10cm
+%
+\cdline[color=seeblau20]{10cm}\\[2cm]%
+%
+% Erstelle eine Linie mit der Farbe seeblau35, einer Länge von 10cm und einem linken Pfeil
+%
+\cdline[color=seeblau35, arrowleft=true]{10cm}\\[2cm]%
+%
+% Erstelle eine Linie mit der Farbe seeblau60, einer Länge von 10cm und einem rechten Pfeil
+%
+\cdline[color=seeblau65, arrowright=true]{10cm}\\[2cm]%
+%
+% Erstelle eine einfache Linie mit der Standardfarbe seeblau100 und einer Länge von 10cm
+%
+\cdline{10cm}\\[2cm]%
+%
+% Erstelle eine Linie mit der Standardfarbe seeblau100, einer Länge von 10cm,
+% einer Dicke von 8pt und einem linken und rechten Pfeil.
+%
+\cdline[thick=8pt, arrowleft=true, arrowright=true]{10cm}\\[2cm]%
+%
+% Erstelle fünf vertikale Linien mit absteigender Länge von 10cm bis 2cm und der
+% Standardfarbe seeblau100.
+%
+\cdline[mode=vertical]{10cm} \hskip 2cm \cdline[mode=vertical]{8cm} \hskip 2cm \cdline[mode=vertical]{6cm} \hskip 2cm \cdline[mode=vertical]{4cm} \hskip 2cm \cdline[mode=vertical]{2cm}%
+\end{textfeld}%
+
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% CD Element: Klammer (mit optionalen Pfeilen) %
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+% Mit dem Makro
+%
+%     \cdbracket[Optionen per Key-Value Pair]{<Breite des Klammer>}{<Höhe des Klammer>}
+%
+% kann eine Klammer mit einer bestimmten Breite und Höhe gezeichnet werden.
+%
+% Dieses Makro besitzt 2 erforderliche Elemente, welche bei jedem Aufruf mit angegeben
+% werden müssen.
+%
+% Die Argumente haben dabei folgende Bedeutung.
+%
+%   1. Argument: Breite der erzeugten Klammer
+%   2. Argument: Höhe der erzeugten Klammer
+%
+%
+% Die wichtigen Formatierungsoptionen werden alle innerhalb des optionalen Argumentes mittels
+% Key-Value Pairs bestimmt.
+%
+% Dabei stehen folgende Optionen zur Verfügung:
+%
+%     thick          Hier wird die Dicke der Linien bestimmt
+%                    Standardwert: \boxlinewidth
+%
+%     mode           Hier wird die Ausrichtung der Klammer angegeben
+%                    Mögliche Werte
+%                        left    linke Klammer
+%                        top     obere Klammer
+%                        right   rechte Klammer
+%                        bottom  untere Klammer
+%                    Standardwert: left
+%
+%     color          Hier wird die Farbe der Linie angegeben
+%                    Es sollten nur die folgenden Farben benutzt werden:
+%                        seeblau100
+%                        seeblau65
+%                        seeblau35
+%                        seeblau20
+%                        black
+%                        schwarz60
+%                        schwarz40
+%                        schwarz20
+%                        schwarz10
+%                    Standardwert: seeblau100
+%
+%     arrowleft      Hier wird angegeben, ob die Klammer am linken (oberen) Ende mit einem Pfeil enden soll
+%                    Mögliche Werte:
+%                        true
+%                        false
+%                    Standardwert: false
+%
+%     arrowright     Hier wird angegeben, ob die Klammer am rechten (unteren) Ende mit einem Pfeil enden soll
+%                    Mögliche Werte:
+%                        true
+%                        false
+%                    Standardwert: false
+%
+%     arrowmiddle    Hier wird angegeben, ob die Klammer in der Mitte einen weiteren Pfeil besitzen soll der in die
+%                    andere Richtung der Klammer zeigt (wie beim Makro \cdblock mit der Optione arrow bei outerbottom / outertop)
+%                    Mögliche Werte:
+%                        true
+%                        false
+%                    Standardwert: false
+
+
+% Erstelle eine Textfeld an der Koordinate (6 cm, 72.5 cm)
+
+\begin{textfeld}{6cm}{72.5cm}%
+%
+% Erstelle eine rechte Klammer, die einen Pfeil in der Mitte nach links besitzt.
+% Die Breite beträgt 5 cm und die Höhe 23.6 cm.
+%
+\cdbracket[mode=right, arrowmiddle=true]{5cm}{23.6cm}\\[2.2cm]%
+%
+% Erstelle vier einfache Linie mit der Standardfarbe seeblau100 und einer Länge von 10cm
+% mit einer steigenden Dicke von der Standardeinstellung bis hin zu 10pt.
+%
+\cdline{10cm}\\[2cm]%
+%
+\cdline[thick=6pt]{10cm}\\[2cm]%
+%
+\cdline[thick=8pt]{10cm}\\[2cm]%
+%
+\cdline[thick=10pt]{10cm}\\[2cm]%
+\end{textfeld}%
+
+
+
+% Erstelle eine Textfeld an der Koordinate (\paperwidth - 17.2cm, 40 cm)
+
+\begin{textfeld}{\paperwidth - 17.2cm}{40cm}%
+%
+% Erstelle eine obere Klammer, die sowohl am Anfang als auch am Ende einen Pfeil besitzt
+% mit einer Dicke von 8pt.
+%
+\cdbracket[thick=8pt, mode=top, arrowleft=true, arrowright=true]{10cm}{2.5cm}\\[2cm]%
+%
+% Erstelle eine untere Klammer, die sowohl am Anfang als auch am Ende einen Pfeil besitzt
+% mit einer Dicke von 8pt. Zudem besitzt sie einen Pfeil in der Mitte der nach unten zeigt.
+%
+\cdbracket[thick=8pt, mode=bottom, arrowleft=true, arrowright=true, arrowmiddle=true]{10cm}{2.5cm}\\[2cm]%
+\end{textfeld}
+
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Unterstreichen               %
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+% Um einen Text mit Hilfe des Unterstreichen Elements des Corporate Design hervorzuheben,
+% steht das bereits bekannte Makro
+%
+%     \underline
+%
+% zur Verfügung, welches an die Anforderungen des Corporate Designs angepasst wurde.
+%
+% Dieses Makro besitzt ein notwendiges Argument
+%
+%     \underline{1. Argument}
+%
+% Das Argument hat folgende Bedeutung:
+% 
+%   1. Argument: Hier wird der zu unterstreichende Text hinterlegt.
+%
+% Wichtig ist noch zu wissen, dass auch Textbrüche ohne Probleme durchgeführt werden können.
+%
+% Zudem können weitere Formatierungen, wie bold oder italic innerhalb des Argumentes angewendet
+% werden.
+%
+% Die Dicke der unterstrichenen Linie passt sich dabei der aktuell verwendeten Textgröße an.
+
+
+% Somit erstellt folgender Befehl zunächst ein Textfeld an der Koordinate (3 cm, \paperheight - 6cm) 
+% mit einer maximalen Breite, da hier die Zeilenumbrüche selbst angegeben werden. Innerhalb
+% des Textfeldes befindet sich ein Fließtext, welcher die Wörter
+%
+%     einzigartigen Umgebung direkt am Bodensee
+%
+% unterstreicht und sie mittels \textbf{...} noch fett hervorhebt.
+
+
+\selectfontsize[baselinefaktor=15/10]{26pt}
+
+% Erstelle eine Textfeld an der Koordinate (\paperwidth - 16cm, 55 cm) mit einer Breite von 10 cm.
+
+\begin{textfeld}[10cm]{\paperwidth - 16cm}{55cm}%
+%
+% Erstelle einen Fließtext der am Anfang unterstrichen und fett ist.
+%
+\underline{\textbf{Ich bin der Anfang von einem Fließtext mit ,,Unterstreichen''}} und ich bin der weiterführende Fließtext \ldots\\[5cm]
+%
+% Erstelle einen blauen fetten Text.
+%
+\textcolor{seeblau100}{\textbf{Und ich bin einfach nur\\seeblau\ldots}}%
+\end{textfeld}%
+
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Farben                       %
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+% Es stehen natürlich auch die Farben des Corporate Designs zur Verfügung:
+%
+%   Schlüssel   Beschreibung      
+%   --------------------------------------------------------------
+%   seeblau100  Seeblau mit der Sättigungsstufe 100%
+%   seeblau65   Seeblau mit der Sättigungsstufe 65%
+%   seeblau35   Seeblau mit der Sättigungsstufe 35%
+%   seeblau20   Seeblau mit der Sättigungsstufe 20%
+%   
+%   schwarz60   Seeblau - SW-Umsetzung mit der Sättigungsstufe 60%
+%   schwarz40   Seeblau - SW-Umsetzung mit der Sättigungsstufe 40%
+%   schwarz20   Seeblau - SW-Umsetzung mit der Sättigungsstufe 20%
+%   schwarz10   Seeblau - SW-Umsetzung mit der Sättigungsstufe 10%
+%
+% Möchte man beispielsweise einen Text mit Seeblau in der Sättigungsstufe
+% 100% schreiben, so kann das bereits existierende Makro
+%
+%     \textcolor{<Schlüssel der Farbe>}{<Zu färbenden Text>}
+%
+% verwendet werden.
+
+
+\selectfontsize[baselinefaktor=13/10]{30pt}
+
+% Somit erstellt folgender Befehl zunächst ein Textfeld an der Koordinate (6cm, \paperheight - 6cm - 26pt) 
+% mit einer maximalen Breite, da es eh aus nur einer Zeile besteht und dem blauen, fetten
+% und kursiv geschriebenen Text:
+%
+%     -- uni-konstanz.de
+%
+\begin{textfeld}{6cm}{\paperheight - 6cm - 26pt}%
+\textcolor{seeblau100}{\textbf{\textit{-- uni-konstanz.de}}}%
+\end{textfeld}%
+
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Merken                       %
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+% Um einen Text mit Hilfe des Merken Elements des Corporate Design hervorzuheben,
+% steht das Makro
+%
+%     \merken
+%
+% zur Verfügung.
+%
+% Dieses Makro besitzt drei unbedingt notwendige Argumente
+%
+%     \merken{1. Argument}{2. Argument}{3. Argument}
+%
+% Die Argumente haben dabei folgende Bedeutung:
+% 
+%   1. Argument: Hier wird die Breite des kompletten Objektes angegeben. Da das
+%                Merken Objekt quadratisch ist, wird hier sowohl die Breite als auch
+%                die Höhe angegeben.
+%
+%   2. Argument: Hier wird die Subline des Merken Elementes angegeben, die direkt unter der
+%                Zeile mit dem X folgt (siehe auch Corporate Design Manual).
+%
+%   3. Argument: Hier wird der eigentliche Inhalt angegeben. Wichtig hierbei ist es,
+%                dass dieser Inhalt an die untere Kante des Merken Elementes orientiert ist.
+%                Somit entgegen der Subline (2. Argument), welche an die obere Kante abzüglich
+%                der Zeile mit dem X orientiert ist.
+%
+% Hier folgt noch eine grafische Darstellung der Argumente:
+%
+%    |<------- 1. Argument ------->|    
+%
+%    -------------------------------    -
+%    |                           X |    ^
+%    | Subline (2. Argument)       |    |
+%    |                             |    1
+%    |                             |    .
+%    |                             |    A
+%    |                             |    r
+%    |                             |    g
+%    |                             |    u
+%    |                             |    m
+%    |                             |    e
+%    |                             |    n
+%    |                             |    t
+%    |                             |    |
+%    | Inhalt (3. Argument)        |    v
+%    -------------------------------    -
+%
+% Wichtig ist noch zu wissen, dass die Linienstärke und die Größe des X in der rechten oberen Ecke an die
+% Höhe / Breite des Merken Elements dynamisch angepasst ist.
+
+
+\selectfontsize[baselinefaktor=15/10]{26pt}
+
+% Somit erstellt folgender Befehl zunächst ein Textfeld an der Koordinate (\paperwidth - 16cm, \paperheight - 16cm) 
+% mit einer maximalen Breite, da es nur aus dem Merken Element besteht und dies eine feste Breite besitzt.
+%
+% Der Inhalt ist wie bereits angesprochen ein Merken-Element mit einer Breite und Höhe von 10 cm, einer leeren
+% Subline und einem textuellen Inhalt:
+%
+%     Hier steht etwas, dass ich mir unbedingt merken oder das ich gesondert hervorheben möchte
+%
+% Die Koordinaten des Textfeldes wurden hier so ausgewählt, damit das Textfeld in der rechten unteren Ecke platziert
+% wird mit jeweils einem Abstand von 6 cm zum Rand.
+
+\begin{textfeld}{\paperwidth - 16cm}{\paperheight - 16cm}%
+\merken{10cm}{}{\textbf{Hier steht etwas,} dass ich mir unbedingt merken oder das ich gesondert hervorheben möchte}
+\end{textfeld}%
+
+% Erstelle ein weiteres Textfeld und darin ein weiteres Merken Objekt, welches nun
+% auch eine Subline besitzt. Zudem sind auch weitere Linien enthalten mit unterschiedlicher
+% Länge und Farben.
+
+\begin{textfeld}{\paperwidth - 16cm}{72.5cm}%
+\merken{10cm}{Subline}{Dieses Merken Element hat sogar eine Subline.}\\[2cm]%
+%
+\cdline[arrowleft=true, arrowright=true]{10cm}\\[2cm]%
+%
+\cdline[thick=8pt, color=schwarz20, mode=vertical]{4cm} \hskip 1.9cm \cdline[thick=8pt, color=schwarz40, mode=vertical]{6cm} \hskip 1.9cm \cdline[thick=8pt, color=schwarz60, mode=vertical]{8cm} \hskip 1.9cm \cdline[thick=8pt, color=schwarz40, mode=vertical]{6cm} \hskip 1.9cm \cdline[thick=8pt, color=schwarz20, mode=vertical]{4cm}%
+\end{textfeld}%
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Ende des Plakats             %
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\end{document}
