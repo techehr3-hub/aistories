@@ -42,7 +42,6 @@
 \babelfont[arabic]{rm}{Noto Nastaliq Urdu}
 
 % ---------- Phenomenon card (visual) ----------
-% \phencard{<icon glyph>}{<phenomenon name>}{<good Urdu>}{<bad Urdu>}
 \newcommand{\phencard}[4]{%
 \begin{tikzpicture}[baseline=(card.north)]
   \node[draw=seeblau35,line width=1pt,rounded corners=4pt,
@@ -84,15 +83,12 @@
   background=none,
   linewidth=2pt
 }
-%%% LEFT EYE CATCHER -- Uni Konstanz logo (with safe fallback)
 {\IfFileExists{graphics/UniKonstanz_Logo_Optimum.pdf}%
   {\includegraphics[height=8em]{graphics/UniKonstanz_Logo_Optimum.pdf}}%
   {\colorbox{seeblau100}{\parbox{8em}{\centering\color{white}\bfseries
     Universit\"at\\Konstanz}}}}
-%%% TITLE
 {\color{seeblau100}\bfseries UrBLiMP: A Benchmark for Evaluating the Linguistic
   Competence of Large Language Models in Urdu}
-%%% AUTHORS (wrapped in parbox so baposter keeps the whole block together)
 {\color{black}\normalsize
 \parbox{0.95\linewidth}{\centering
  Farah Adeeba$^{1,2}$ \quad Brian Dillon$^{1}$ \quad Hassan Sajjad$^{3}$ \quad Rajesh Bhatt$^{1}$\\[3pt]
@@ -101,7 +97,6 @@
  $^{2}$Cluster of Excellence ``The Politics of Inequality'', University of Konstanz, Germany \quad
  $^{3}$Faculty of Computer Science, Dalhousie University, Halifax, Canada \\[2pt]
  \textit{ACL 2026 Findings} \;$\bullet$\; \texttt{farah.adeeba@uni-konstanz.de}}}
-%%% RIGHT EYE CATCHER -- venue badge
 {\color{seeblau100}\Large\bfseries ACL\\[-2pt]2026}
 
 
@@ -157,7 +152,6 @@ RuBLiMP, TurBLiMP, BLiMP-NL, MultiBLiMP) lack broad coverage for Urdu.\\[4pt]
 \headerbox{Linguistic Phenomena -- 10 cards, one per phenomenon}%
 {name=phen,column=0,below=motiv,span=2}{
 \centering
-% Row 1 of cards
 \phencard{A}{Aspect Agreement}%
   {وہ ملتا \underline{رہا} تھا}%
   {وہ ملتا \underline{چکا} تھا}\hfill
@@ -167,7 +161,6 @@ RuBLiMP, TurBLiMP, BLiMP-NL, MultiBLiMP) lack broad coverage for Urdu.\\[4pt]
 \phencard{E}{Ergativity}%
   {نے ماجرا \underline{سنایا}}%
   {نے ماجرا \underline{سناتا}}\\[6pt]
-% Row 2 of cards
 \phencard{X}{Experiencer Subject}%
   {\underline{مجھے} پسند آیا}%
   {\underline{میں} پسند آیا}\hfill
@@ -177,7 +170,6 @@ RuBLiMP, TurBLiMP, BLiMP-NL, MultiBLiMP) lack broad coverage for Urdu.\\[4pt]
 \phencard{N}{N--J Agreement}%
   {بیس فٹ \underline{اونچا} ہے}%
   {بیس فٹ \underline{اونچی} ہے}\\[6pt]
-% Row 3 of cards
 \phencard{O}{Obliqueness}%
   {\underline{بڑے} صاحب نے کہا}%
   {\underline{بڑا} صاحب نے کہا}\hfill
@@ -187,7 +179,6 @@ RuBLiMP, TurBLiMP, BLiMP-NL, MultiBLiMP) lack broad coverage for Urdu.\\[4pt]
 \phencard{S}{Subject--Verb Agr}%
   {باپ پاگل ہو \underline{جاتا}}%
   {باپ پاگل ہو \underline{جاتی}}\\[6pt]
-% Row 4 (centered single card)
 \phencard{W}{Word-Order Variation}%
   {جو \underline{بات} ہے وہ بولو}%
   {جو ہے وہ بولو بات}\hfill
@@ -203,7 +194,7 @@ RuBLiMP, TurBLiMP, BLiMP-NL, MultiBLiMP) lack broad coverage for Urdu.\\[4pt]
 
 
 %====================================================================
-% ROW 3 -- Method (visual 3-step pipeline)
+% ROW 3 -- Method
 %====================================================================
 \headerbox{Method -- end-to-end pipeline}{name=method,column=0,below=phen,span=2}{
 \centering
@@ -239,7 +230,7 @@ RuBLiMP, TurBLiMP, BLiMP-NL, MultiBLiMP) lack broad coverage for Urdu.\\[4pt]
 
 
 %====================================================================
-% ROW 4 -- Evaluation setup + headline results
+% ROW 4 -- Evaluation + Results
 %====================================================================
 \headerbox{Evaluation Setup}{name=eval,column=0,below=method}{
 \textcolor{seeblau100}{\textbf{Models (20+)}}
@@ -260,6 +251,8 @@ GPT-4o evaluated via two-choice prompting (\textit{explain-then-process}).
 \headerbox{Headline Results -- Avg.\ Accuracy across 10 Phenomena}%
 {name=results,column=1,below=method}{
 \centering
+% NOTE: pgfplots' symbolic coords cannot contain spaces or parentheses,
+% so we use safe identifiers internally and pretty labels via yticklabels.
 \begin{tikzpicture}
 \begin{axis}[
    xbar,
@@ -269,8 +262,11 @@ GPT-4o evaluated via two-choice prompting (\textit{explain-then-process}).
    xmin=45,xmax=100,
    xlabel={\footnotesize Average accuracy (\%)},
    xtick={50,60,70,80,90,100},
+   symbolic y coords={mT5small,mT5large,mBERT,Granite8B,LLaMA8B,
+        DeepSeek70B,Gemma12B,Gemma27B,Alif8B,GPT4oCoT,
+        LLaMA70B,GPT4oBase,Human,GPT4oGP},
    ytick=data,
-   symbolic y coords={mT5-small,mT5-large,mBERT,Granite-8B,LLaMA-3-8B,
+   yticklabels={mT5-small,mT5-large,mBERT,Granite-8B,LLaMA-3-8B,
         DeepSeek-70B,Gemma-3-12B,Gemma-3-27B,Alif-8B,GPT-4o (CoT),
         LLaMA-3-70B,GPT-4o (Base),Human,GPT-4o (GP)},
    nodes near coords,nodes near coords align={horizontal},
@@ -279,16 +275,16 @@ GPT-4o evaluated via two-choice prompting (\textit{explain-then-process}).
    label style={font=\footnotesize},
 ]
 \addplot[fill=seeblau100,draw=seeblau100] coordinates {
-   (50.69,mT5-small) (63.36,mT5-large) (78.77,mBERT)
-   (87.44,Granite-8B) (90.71,LLaMA-3-8B) (92.46,DeepSeek-70B)
-   (92.68,Gemma-3-12B) (92.42,Gemma-3-27B) (93.25,Alif-8B)
-   (94.25,GPT-4o (CoT)) (94.73,LLaMA-3-70B) (95.69,GPT-4o (Base))
-   (97.40,GPT-4o (GP))};
+   (50.69,mT5small) (63.36,mT5large) (78.77,mBERT)
+   (87.44,Granite8B) (90.71,LLaMA8B) (92.46,DeepSeek70B)
+   (92.68,Gemma12B) (92.42,Gemma27B) (93.25,Alif8B)
+   (94.25,GPT4oCoT) (94.73,LLaMA70B) (95.69,GPT4oBase)
+   (97.40,GPT4oGP)};
 \addplot[fill=seeblau35,draw=seeblau100] coordinates {
    (96.28,Human)};
-\draw[red,dashed,thick] (axis cs:96.28,mT5-small)
-   -- (axis cs:96.28,GPT-4o (GP)) node[pos=0.9,above,
-   font=\scriptsize,red] {Human baseline};
+\draw[red,dashed,thick] (axis cs:96.28,mT5small)
+   -- (axis cs:96.28,GPT4oGP)
+   node[pos=0.9,above,font=\scriptsize,red] {Human baseline};
 \end{axis}
 \end{tikzpicture}\\[-4pt]
 {\footnotesize\textit{Only \textbf{GPT-4o + Grammar-Prompt} exceeds the
@@ -297,7 +293,7 @@ human baseline. LLaMA-3-70B \& Urdu-tuned Alif-8B are within reach.}}
 
 
 %====================================================================
-% ROW 5 -- Findings: model size chart + 2 text findings
+% ROW 5 -- Findings
 %====================================================================
 \headerbox{Key Findings}{name=findings,column=0,below=eval,span=2}{
 \begin{minipage}[t]{0.36\linewidth}
