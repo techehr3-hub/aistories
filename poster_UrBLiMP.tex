@@ -11,14 +11,9 @@
 
 % NOTE on babel / bidi:
 %   - themeKonstanz.sty internally does \usepackage[ngerman]{babel}.
-%     So we MUST NOT load babel again -- it would raise the
-%     "package babel has already been loaded with options" error.
-%   - babel option `bidi=basic` works ONLY with LuaLaTeX. With XeLaTeX
-%     it raises the `bidi-only-lua` error. For XeLaTeX we therefore
-%     leave bidi at babel's default (`bidi=default`), which is enough
-%     for the short inline Urdu phrases used here.
-%   - If you compile with LuaLaTeX, uncomment the global option line
-%     below (line marked LUA-ONLY) for better bidi handling.
+%     So we MUST NOT load babel again.
+%   - `bidi=basic` works only with LuaLaTeX. For XeLaTeX we leave bidi
+%     at babel's default (enough for the short inline Urdu phrases).
 
 \documentclass[rgb]{article}
 % LUA-ONLY (uncomment for LuaLaTeX):
@@ -27,9 +22,9 @@
 \usepackage{themeKonstanz}
 
 % babel is already loaded by themeKonstanz -- DO NOT load it again.
-% Just import the Arabic locale on top of the existing babel instance.
 \babelprovide[import]{arabic}
 
+\usepackage{amssymb}   % \checkmark etc. (used in math mode)
 \usepackage{booktabs}
 \usepackage{array}
 \usepackage{makecell}
@@ -117,8 +112,8 @@ $\bullet$~\textbf{Experiencer Subject} -- dative \textit{mujhe}\\[0.2\baselinesk
 $\bullet$~\textbf{Honorific} plural agreement\\[0.2\baselineskip]%
 $\bullet$~\textbf{Obliqueness} (adj., noun, pronoun, plural, verb)\\[0.5\baselineskip]%
 \textit{Minimal pair (Ergativity):}\\[0.2\baselineskip]%
-\textbf{\textcolor{seeblau100}{\checkmark}} \foreignlanguage{arabic}{پہرے‌دار نے تمام ماجرا راجا کو سنایا}\\[0.1\baselineskip]
-\textbf{\textcolor{schwarz60}{$\times$}} \foreignlanguage{arabic}{پہرے‌دار نے تمام ماجرا راجا کو سناتا}\\[0.2\baselineskip]%
+\textbf{\textcolor{seeblau100}{$\checkmark$}}~\foreignlanguage{arabic}{پہرے‌دار نے تمام ماجرا راجا کو سنایا}\\[0.1\baselineskip]
+\textbf{\textcolor{schwarz60}{$\times$}}~\foreignlanguage{arabic}{پہرے‌دار نے تمام ماجرا راجا کو سناتا}\\[0.2\baselineskip]%
 \textit{(ergative \textit{ne} requires perfective verb form)}}%
 \end{textfeld}%
 
